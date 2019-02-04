@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">GmBoard</string>
+    <string name="action_settings">Settings</string>
+    <string name="ButtonCreate">Créer</string>
+    <string name="ButtonPlay">Jouer</string>
+    <string name="Sound1">Son1</string>
+    <string name="Sound2">Son2</string>
+    <string name="Sound3">Son3</string>
+    <string name="Sound4">Son4</string>
+    <string name="Sound5">Son5</string>
+    <string name="LevelUp">Level Up</string>
+    <string name="Coin">Coin</string>
+    <string name="chat">Miaou</string>
+    <string name="title_activity_sound_board">SoundBoard</string>
+</resources>
