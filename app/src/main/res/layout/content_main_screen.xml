@@ -29,6 +29,15 @@
             />
 
         <Button
+            android:id="@+id/buttonUnitTest"
+            android:layout_width="350dip"
+            android:layout_height="0dp"
+            android:layout_marginTop="40sp"
+            android:layout_marginBottom="40sp"
+            android:layout_weight="33"
+            android:text="@string/ButtonUnitTest" />
+
+        <Button
             android:id="@+id/buttonCreate"
             android:layout_width="350dip"
             android:layout_weight="33"
@@ -45,5 +54,11 @@
             android:layout_marginTop="40sp"
             android:layout_marginBottom="40sp"
             android:text="@string/ButtonPlay" />
+
+        <Button
+            android:id="@+id/unittest2"
+            android:layout_width="350dip"
+            android:layout_height="wrap_content"
+            android:text="list unit" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

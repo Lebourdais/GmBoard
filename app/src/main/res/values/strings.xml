@@ -25,4 +25,5 @@
     <string name="unitCharismaTitle">Charisma</string>
     <string name="unitNotesTitle">Additionnal notes</string>
     <string name="unitCreationConfirm">Create</string>
+    <string name="ButtonUnitTest">Unit Test</string>
 </resources>

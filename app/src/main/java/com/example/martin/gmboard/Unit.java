@@ -1,13 +1,23 @@
 package com.example.martin.gmboard;
 
 import android.content.Context;
+import android.util.JsonWriter;
+import android.util.Log;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONArray;
+
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Writer;
 import java.util.Hashtable;
 
 public class Unit {
@@ -44,6 +54,16 @@ public class Unit {
         this.stats = pStats;
     }
 
+    public String getName() { return this.name; }
+    public int getAttack() { return this.atk; }
+    public int getDefense() { return this.def; }
+    public String getNotes() { return this.notes; }
+    public int getMaxHP() { return this.maxHP; }
+    public int getCurrentHP() { return this.currentHP; }
+    public Hashtable<String, Integer> getStats() { return this.stats; }
+
+
+
     public void loseHP (int amount){
         this.currentHP-=amount;
     }
@@ -68,7 +88,55 @@ public class Unit {
         this.stats = newStats;
     }
 
-    public void saveToFile (Context context, String fileName){
+    public void saveToFile (Context context, String fileName) throws IOException, JSONException {
+        Log.d("START", "Entering saveToFile");
+
+        File file = new File(context.getFilesDir(), fileName);
+
+        FileReader fileReader = null;
+        FileWriter fileWriter = null;
+        BufferedReader bufferedReader = null;
+        BufferedWriter bufferedWriter = null;
+
+        String response = null;
+
+        if(!file.exists()) {
+            try {
+                file.createNewFile();
+                fileWriter = new FileWriter(file.getAbsoluteFile());
+                bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.write("{}");
+                bufferedWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        StringBuffer output = new StringBuffer();
+        try {
+            fileReader = new FileReader(file.getAbsolutePath());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        bufferedReader = new BufferedReader(fileReader);
+
+        String line = "";
+
+        while((line  = bufferedReader.readLine()) != null) {
+            output.append(line + "\n");
+        }
+
+        response = output.toString();
+
+        bufferedReader.close();
+
+        JSONObject messageDetails = null;
+        try {
+            messageDetails = new JSONObject(response);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Boolean isUnitExisting = messageDetails.has("Unit");
+
         JSONObject newUnit = new JSONObject();
         try {
             newUnit.put("name", name);
@@ -81,15 +149,23 @@ public class Unit {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        // Lit le fichier json existant
-        String jsonText = readText(context, R.raw.unitStorage);
-        JSONObject jsonRoot = new JSONObject(jsonText);
 
-        JSONArray jsonArray = new JSONArray();
+        if(!isUnitExisting) {
+            JSONArray newUnitArray = new JSONArray();
+            newUnitArray.put(newUnit);
+            messageDetails.put("Unit", newUnitArray);
+        } else {
+            JSONArray unitArray = (JSONArray) messageDetails.get("Unit");
+            unitArray.put(newUnit);
+        }
 
-        jsonArray.put(jsonRoot);
-        jsonArray.put(newUnit);
+        fileWriter = new FileWriter(file.getAbsoluteFile());
+        BufferedWriter bw = new BufferedWriter(fileWriter);
+        bw.write(messageDetails.toString());
+        bw.close();
+
     }
+
 
     private static String readText(Context context, int resId) throws IOException {
         InputStream is = context.getResources().openRawResource(resId);
@@ -103,4 +179,36 @@ public class Unit {
         return sb.toString();
     }
 
+
+        public void writeJsonStream(Writer output) throws IOException {
+            JsonWriter jsonWriter = new JsonWriter(output);
+
+            jsonWriter.beginObject();// begin root
+            // "Unit" : { ... }
+            jsonWriter.name("Unit").beginObject();
+
+                jsonWriter.name("name").value(getName());
+                jsonWriter.name("attack").value(getAttack());
+                jsonWriter.name("defense").value(getDefense());
+                jsonWriter.name("maxHP").value(getMaxHP());
+                jsonWriter.name("currentHP").value(getCurrentHP());
+
+                Hashtable<String, Integer> s = getStats();
+
+                // "stats": { ... }
+                jsonWriter.name("stats").beginObject(); // begin websites
+                    jsonWriter.name("strength").value(s.get("strength"));
+                    jsonWriter.name("dexterity").value(s.get("dexterity"));
+                    jsonWriter.name("constitution").value(s.get("constitution"));
+                    jsonWriter.name("intelligence").value(s.get("intelligence"));
+                    jsonWriter.name("wisdom").value(s.get("wisdom"));
+                    jsonWriter.name("charisma").value(s.get("charisma"));
+                jsonWriter.endObject();// end stats
+
+                jsonWriter.name("notes").value(getNotes());
+            // end unit
+             jsonWriter.endObject();
+            // end root
+            jsonWriter.endObject();
+        }
 }

@@ -1,13 +1,18 @@
 package com.example.martin.gmboard;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.Hashtable;
 
 public class UnitUi extends AppCompatActivity {
@@ -24,9 +29,20 @@ public class UnitUi extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Button btnCreateUnit = (Button)findViewById(R.id.UnitCreationConfirm);
+
+
+        btnCreateUnit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewUnit(v);
+                startActivity(new Intent(UnitUi.this, MainScreen.class));
+            }
+        });
+
     }
 
-    public void onClick(View v) {
+    public void createNewUnit(View v) {
 
         String name = ((EditText)findViewById(R.id.unitName)).getText().toString();
         String notes = ((EditText)findViewById(R.id.unitNotes)).getText().toString();
@@ -49,7 +65,13 @@ public class UnitUi extends AppCompatActivity {
 
         Unit unit = new Unit(name, maxHP, attack, defense, notes, stats, context);
 
-        unit.saveToFile(context, "unitStorage.json");
+        try {
+            unit.saveToFile(context, "unitstorage.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 

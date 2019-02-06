@@ -32,12 +32,30 @@ public class MainScreen extends AppCompatActivity {
         });
         Button btnplay = (Button)findViewById(R.id.buttonCreate);
 
+
         btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainScreen.this, SoundBoard.class));
             }
         });
+
+        Button btnUnitTest = (Button)findViewById(R.id.buttonUnitTest);
+
+        btnUnitTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainScreen.this, UnitUi.class));
+            }
+        });
+        Button btnUnitTest2 = (Button)findViewById(R.id.unittest2);;
+        btnUnitTest2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainScreen.this, testUnitList.class));
+            }
+        });
+
     }
 
     @Override

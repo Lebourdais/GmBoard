@@ -32,6 +32,13 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="landscape">
         </activity>
+        <activity
+            android:name=".testUnitList"
+            android:label="@string/title_activity_unit_creation"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="landscape">
+        </activity>
+
     </application>
 
 </manifest>

@@ -21,7 +21,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_weight="60%"
+        android:layout_weight=".6"
         android:ems="10"
         android:inputType="textPersonName"
         android:selectAllOnFocus="false"
@@ -33,12 +33,12 @@
 
     <EditText
         android:id="@+id/unitMaxHP"
-        android:layout_width="match_constraint"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_weight="16%"
+        android:layout_weight=".16"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toStartOf="@+id/unitAttack"
@@ -48,12 +48,12 @@
 
     <EditText
         android:id="@+id/unitAttack"
-        android:layout_width="match_constraint"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_weight="16%"
+        android:layout_weight=".16"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toStartOf="@+id/unitDefense"
@@ -63,10 +63,10 @@
 
     <EditText
         android:id="@+id/unitDefense"
-        android:layout_width="match_constraint"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_weight="16%"
+        android:layout_weight=".16"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +81,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_weight="16%"
+        android:layout_weight=".16"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toStartOf="@+id/unitDexterity"
@@ -96,7 +96,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_weight="16%"
+        android:layout_weight=".16"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toStartOf="@+id/unitConstitution"
@@ -111,7 +111,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_weight="16%"
+        android:layout_weight=".16"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toStartOf="@+id/unitIntelligence"
@@ -126,7 +126,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_weight="16%"
+        android:layout_weight=".16"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toStartOf="@+id/unitWisdom"
@@ -141,7 +141,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_weight="16%"
+        android:layout_weight=".16"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toStartOf="@+id/unitCharisma"
@@ -154,7 +154,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_weight="16%"
+        android:layout_weight=".16"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
@@ -165,7 +165,7 @@
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
+            android:layout_height="300dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
@@ -180,8 +180,8 @@
 
             <EditText
                 android:id="@+id/unitNotes"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:inputType="textMultiLine" />
 
@@ -198,19 +198,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/unitStrength" />
 
-        <Button
-            android:id="@+id/UnitCreationConfirm"
-            android:layout_width="88dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:text="@string/unitCreationConfirm"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.499"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/UnitCreationConfirm"
+        android:layout_width="88dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/unitCreationConfirm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        />
+
+    </android.support.constraint.ConstraintLayout>
 </ScrollView>
