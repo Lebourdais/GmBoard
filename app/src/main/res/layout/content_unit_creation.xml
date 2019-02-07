@@ -1,177 +1,288 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="16dp"
-    android:paddingTop="16dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="16dp">
+    android:layout_height="fill_parent"
+    android:padding="16dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="fill_parent"
+        android:weightSum="100">
 
-    <EditText
-        android:id="@+id/unitName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_weight=".6"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:selectAllOnFocus="false"
-        android:singleLine="false"
-        app:layout_constraintEnd_toStartOf="@+id/unitMaxHP"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/TILName"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="60"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toStartOf="@+id/TILMaxHP"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/unitMaxHP"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_weight=".16"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toStartOf="@+id/unitAttack"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/unitName"
-        app:layout_constraintTop_toTopOf="parent" />
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/unitName"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="@string/Name"
+                android:inputType="textPersonName"
+                android:selectAllOnFocus="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/unitAttack"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_weight=".16"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toStartOf="@+id/unitDefense"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/unitMaxHP"
-        app:layout_constraintTop_toTopOf="parent" />
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/TILMaxHP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="16"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toStartOf="@+id/TILAttack"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/TILName"
+            app:layout_constraintTop_toTopOf="@+id/TILName">
 
-    <EditText
-        android:id="@+id/unitDefense"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_weight=".16"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/unitAttack"
-        app:layout_constraintTop_toTopOf="parent" />
+            <EditText
+                android:id="@+id/unitMaxHP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
 
-    <EditText
-        android:id="@+id/unitStrength"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_weight=".16"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toStartOf="@+id/unitDexterity"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/unitName" />
+                android:ems="10"
+                android:hint="@string/MaxHP"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/unitDexterity"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_weight=".16"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toStartOf="@+id/unitConstitution"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/unitStrength"
-        app:layout_constraintTop_toBottomOf="@+id/unitName" />
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/TILAttack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="16"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toStartOf="@+id/TILDefense"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/TILMaxHP"
+            app:layout_constraintTop_toTopOf="@+id/TILMaxHP">
 
-    <EditText
-        android:id="@+id/unitConstitution"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_weight=".16"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toStartOf="@+id/unitIntelligence"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/unitDexterity"
-        app:layout_constraintTop_toBottomOf="@+id/unitMaxHP" />
+            <EditText
+                android:id="@+id/unitAttack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
 
-    <EditText
-        android:id="@+id/unitIntelligence"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_weight=".16"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toStartOf="@+id/unitWisdom"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/unitConstitution"
-        app:layout_constraintTop_toBottomOf="@+id/unitAttack" />
+                android:ems="10"
+                android:hint="@string/Attack"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/unitWisdom"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_weight=".16"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toStartOf="@+id/unitCharisma"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/unitIntelligence"
-        app:layout_constraintTop_toBottomOf="@+id/unitAttack" />
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/TILDefense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="16"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/TILAttack"
+            app:layout_constraintTop_toTopOf="@+id/TILAttack">
 
-    <EditText
-        android:id="@+id/unitCharisma"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_weight=".16"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/unitWisdom"
-        app:layout_constraintTop_toBottomOf="@+id/unitDefense" />
+            <EditText
+                android:id="@+id/unitDefense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+
+                android:ems="10"
+                android:hint="@string/Defense"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/TILStrength"
+            android:layout_width="198dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="16"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/unitNotesTitle"
+            app:layout_constraintEnd_toStartOf="@+id/TILDexterity"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TILName">
+
+            <EditText
+                android:id="@+id/unitStrength"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+
+                android:ems="10"
+                android:hint="@string/Strength"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/TILDexterity"
+            android:layout_width="199dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="16"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/unitNotesTitle"
+            app:layout_constraintEnd_toStartOf="@+id/TILConstitution"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/TILStrength"
+            app:layout_constraintTop_toBottomOf="@+id/TILName">
+
+            <EditText
+                android:id="@+id/unitDexterity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+
+                android:ems="10"
+                android:hint="@string/Dexterity"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/TILConstitution"
+            android:layout_width="199dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="16"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/unitNotesTitle"
+            app:layout_constraintEnd_toStartOf="@+id/TILIntelligence"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/TILDexterity"
+            app:layout_constraintTop_toBottomOf="@+id/TILName">
+
+            <EditText
+                android:id="@+id/unitConstitution"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+
+                android:ems="10"
+                android:hint="@string/Constitution"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/TILIntelligence"
+            android:layout_width="198dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="16"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/unitNotesTitle"
+            app:layout_constraintEnd_toStartOf="@+id/TILWisdom"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/TILConstitution"
+            app:layout_constraintTop_toBottomOf="@+id/TILName">
+
+            <EditText
+                android:id="@+id/unitIntelligence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+
+                android:ems="10"
+                android:hint="@string/Intelligence"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/TILWisdom"
+            android:layout_width="199dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="16"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/unitNotesTitle"
+            app:layout_constraintEnd_toStartOf="@+id/TILCharisma"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/TILIntelligence"
+            app:layout_constraintTop_toBottomOf="@+id/TILName">
+
+            <EditText
+                android:id="@+id/unitWisdom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+
+                android:ems="10"
+                android:hint="@string/Wisdom"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/TILCharisma"
+            android:layout_width="199dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="16"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/unitNotesTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/TILWisdom"
+            app:layout_constraintTop_toBottomOf="@+id/TILName">
+
+            <EditText
+                android:id="@+id/unitCharisma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+
+                android:ems="10"
+                android:hint="@string/Charisma"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
 
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="fill_parent"
             android:layout_height="300dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="16"
             android:fillViewport="true"
             app:layout_constraintBottom_toTopOf="@+id/UnitCreationConfirm"
             app:layout_constraintEnd_toEndOf="parent"
@@ -187,33 +298,32 @@
 
         </ScrollView>
 
-    <TextView
-        android:id="@+id/unitNotesTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/unitNotesTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/unitStrength" />
+        <Button
+            android:id="@+id/UnitCreationConfirm"
+            android:layout_width="88dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/unitCreationConfirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.499"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
-    <Button
-        android:id="@+id/UnitCreationConfirm"
-        android:layout_width="88dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/unitCreationConfirm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        />
+        <TextView
+            android:id="@+id/unitNotesTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="208dp"
+            android:layout_marginStart="208dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/unitNotesTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TILStrength" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>
