@@ -17,16 +17,17 @@
         android:visibility="visible"
         android:weightSum="100">
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="50">
+        <!--<HorizontalScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="50">-->
 
             <TableLayout
                 android:id="@+id/tableLayout1"
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:stretchColumns="*"
+                android:layout_weight="1"
                 android:visibility="visible">
 
                 <TableRow
@@ -130,17 +131,18 @@
                          />
                 </TableRow>
             </TableLayout>
-        </HorizontalScrollView>
+        <!--</HorizontalScrollView>-->
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="50">
+        <!--<HorizontalScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="50">-->
 
             <TableLayout
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:stretchColumns="*"
+                android:layout_weight="1"
                 android:visibility="visible">
 
                 <TableRow
@@ -278,7 +280,7 @@
                 </TableRow>
 
             </TableLayout>
-        </HorizontalScrollView>
+        <!--</HorizontalScrollView>-->
 
     </LinearLayout>
 

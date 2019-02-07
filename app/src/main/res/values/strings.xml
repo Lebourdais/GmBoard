@@ -26,4 +26,5 @@
     <string name="unitNotesTitle">Additionnal notes</string>
     <string name="unitCreationConfirm">Create</string>
     <string name="ButtonUnitTest">Unit Test</string>
+    <string name="title_activity_map">Map</string>
 </resources>

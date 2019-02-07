@@ -12,8 +12,8 @@
         <activity
             android:name=".MainScreen"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,22 +23,22 @@
         <activity
             android:name=".SoundBoard"
             android:label="@string/title_activity_sound_board"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="landscape">
-        </activity>
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".UnitUi"
             android:label="@string/title_activity_unit_creation"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="landscape">
-        </activity>
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".testUnitList"
             android:label="@string/title_activity_unit_creation"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="landscape">
-        </activity>
-
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Map"
+            android:label="@string/title_activity_map"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
