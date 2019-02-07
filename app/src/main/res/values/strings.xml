@@ -26,5 +26,14 @@
     <string name="unitNotesTitle">Additionnal notes</string>
     <string name="unitCreationConfirm">Create</string>
     <string name="ButtonUnitTest">Unit Test</string>
-    <string name="title_activity_map">Map</string>
+    <string name="Name">Name</string>
+    <string name="MaxHP">MaxHP</string>
+    <string name="Attack">Attack</string>
+    <string name="Defense">Defense</string>
+    <string name="Strength">Strength</string>
+    <string name="Dexterity">Dexterity</string>
+    <string name="Constitution">Constitution</string>
+    <string name="Intelligence">Intelligence</string>
+    <string name="Wisdom">Wisdom</string>
+    <string name="Charisma">Charisma</string>
 </resources>

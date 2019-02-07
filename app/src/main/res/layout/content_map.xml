@@ -5,32 +5,32 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="1270dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <TextView
             android:id="@+id/yposTxt"
             android:layout_width="match_parent"
             android:layout_height="165dp"
-            android:gravity="center"/>
+            android:gravity="center" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="328dp"
-            android:background="@color/colorPrimary"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:text="View 1"
-            android:textColor="@color/primary_dark_material_dark"
-            android:textSize="100dp" />
+            android:layout_gravity="center"
+            >
+            <ImageView
+                android:id="@+id/imageMap"
+                android:layout_width="500dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:src="@drawable/swordcoastmaplowres" />
+            android:src="@drawable/pic"/>
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="320dp"
-            android:background="@color/colorAccent"
-            android:text="View 2"
-            android:textColor="@color/primary_dark_material_dark"
-            android:textSize="100dp" />
     </LinearLayout>
 
 
