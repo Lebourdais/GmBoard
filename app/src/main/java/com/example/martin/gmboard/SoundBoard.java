@@ -2,12 +2,14 @@ package com.example.martin.gmboard;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +20,8 @@ import android.widget.Toast;
 
 import com.example.martin.gmboard.Map;
 import com.example.martin.gmboard.OnSwipeTouchListener;
+
+import java.io.IOException;
 
 public class SoundBoard extends AppCompatActivity {
     private float x1,x2;
@@ -30,16 +34,19 @@ public class SoundBoard extends AppCompatActivity {
         setContentView(R.layout.activity_sound_board);
         View view = findViewById(R.id.soundboardcreate);
 
-        view.setOnTouchListener(new OnSwipeTouchListener(SoundBoard.this){
+        view.setOnTouchListener(new OnSwipeTouchListener(SoundBoard.this) {
             public void onSwipeTop() {
                 startActivity(new Intent(SoundBoard.this, Map.class));
             }
+
             public void onSwipeRight() {
                 Toast.makeText(SoundBoard.this, "right", Toast.LENGTH_SHORT).show();
             }
+
             public void onSwipeLeft() {
                 Toast.makeText(SoundBoard.this, "left", Toast.LENGTH_SHORT).show();
             }
+
             public void onSwipeBottom() {
                 Toast.makeText(SoundBoard.this, "bottom", Toast.LENGTH_SHORT).show();
             }
@@ -84,6 +91,8 @@ public class SoundBoard extends AppCompatActivity {
             }
 
         });
+
+
     }
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev){
@@ -115,6 +124,7 @@ public class SoundBoard extends AppCompatActivity {
             mPlayer.release();
         }
     }
+
 
 
 }

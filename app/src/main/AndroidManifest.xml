@@ -37,7 +37,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".Map"
-            android:label="@string/title_activity_map"
+            android:label="Map"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
