@@ -6,9 +6,13 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -35,8 +39,24 @@ public class UnitUi extends AppCompatActivity {
         btnCreateUnit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createNewUnit(v);
-                startActivity(new Intent(UnitUi.this, MainScreen.class));
+                if(Unit.exists(context, ((EditText)findViewById(R.id.unitName)).getText().toString()))
+                    Toast.makeText(context, getString(R.string.creationError), Toast.LENGTH_LONG).show();
+                else if (
+                        TextUtils.isEmpty( ((EditText)findViewById(R.id.unitMaxHP)).getText().toString().trim() ) ||
+                        TextUtils.isEmpty( ((EditText)findViewById(R.id.unitAttack)).getText().toString().trim() ) ||
+                        TextUtils.isEmpty( ((EditText)findViewById(R.id.unitDefense)).getText().toString().trim() ) ||
+                        TextUtils.isEmpty( ((EditText)findViewById(R.id.unitStrength)).getText().toString().trim() ) ||
+                        TextUtils.isEmpty( ((EditText)findViewById(R.id.unitDexterity)).getText().toString().trim() ) ||
+                        TextUtils.isEmpty( ((EditText)findViewById(R.id.unitConstitution)).getText().toString().trim() ) ||
+                        TextUtils.isEmpty( ((EditText)findViewById(R.id.unitIntelligence)).getText().toString().trim() ) ||
+                        TextUtils.isEmpty( ((EditText)findViewById(R.id.unitWisdom)).getText().toString().trim() )  ||
+                        TextUtils.isEmpty( ((EditText)findViewById(R.id.unitCharisma)).getText().toString().trim() )
+                ) {
+                    Toast.makeText(context, getString(R.string.creationError2), Toast.LENGTH_LONG).show();
+                } else{
+                    createNewUnit(v);
+                    startActivity(new Intent(UnitUi.this, MainScreen.class));
+                }
             }
         });
 
@@ -55,6 +75,7 @@ public class UnitUi extends AppCompatActivity {
         final int intelligence = Integer.parseInt(((EditText)findViewById(R.id.unitIntelligence)).getText().toString());
         final int wisdom = Integer.parseInt(((EditText)findViewById(R.id.unitWisdom)).getText().toString());
         final int charisma = Integer.parseInt(((EditText)findViewById(R.id.unitCharisma)).getText().toString());
+        boolean pc = ((CheckBox) findViewById(R.id.checkBoxPC)).isChecked();
 
         Hashtable stats = new Hashtable<String, Integer>() {{ put("STR",strength);
                                                             put("DEX", dexterity);
@@ -63,10 +84,9 @@ public class UnitUi extends AppCompatActivity {
                                                             put("WIS", wisdom);
                                                             put("CHA", charisma);}};
 
-        Unit unit = new Unit(name, maxHP, attack, defense, notes, stats, context);
-
+        Unit unit = new Unit(name, maxHP, attack, defense, notes, stats, pc);
         try {
-            unit.saveToFile(context, "unitstorage.json");
+            FileHelper.saveUnit(context, unit);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -74,5 +94,13 @@ public class UnitUi extends AppCompatActivity {
         }
 
     }
+
+    public TextView printUnit(Unit u){
+
+
+        return new TextView(context);
+    }
+
+
 
 }

@@ -5,10 +5,12 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -32,14 +34,20 @@ public class testUnitList extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button btnCreateUnit = (Button)findViewById(R.id.buttonmagique);
+        TextView tv = findViewById(R.id.textView2);
 
+        try {
+            tv.setText(FileHelper.readUnits(context));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        btnCreateUnit.setOnClickListener(new View.OnClickListener() {
+        Button b = (Button)findViewById(R.id.DeleteB);
+        b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    printUnitList();
+                    clearUnits("unitstorage.json");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -48,9 +56,8 @@ public class testUnitList extends AppCompatActivity {
 
     }
 
-    public void printUnitList() throws IOException {
 
-        String fileName = "unitstorage.json";
+    public void clearUnits(String fileName) throws IOException {
         File file = new File(context.getFilesDir(), fileName);
 
         FileReader fileReader = null;
@@ -60,20 +67,17 @@ public class testUnitList extends AppCompatActivity {
 
         String response = null;
 
-        // Si le fichier n'existe pas, on en crée un vide
-        if(!file.exists()) {
+
             try {
                 file.createNewFile();
                 fileWriter = new FileWriter(file.getAbsoluteFile());
                 bufferedWriter = new BufferedWriter(fileWriter);
-                bufferedWriter.write("{}");
+                bufferedWriter.write("[]");
                 bufferedWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
 
-        // On lit le fichier
         StringBuffer output = new StringBuffer();
         try {
             fileReader = new FileReader(file.getAbsolutePath());
@@ -82,23 +86,30 @@ public class testUnitList extends AppCompatActivity {
         }
         bufferedReader = new BufferedReader(fileReader);
 
-         String line = "";
+        String line = "";
 
         while((line  = bufferedReader.readLine()) != null) {
             output.append(line + "\n");
         }
 
         response = output.toString();
-        Log.d("BORDEL", "response : " + response);
+
         bufferedReader.close();
 
-        // File read
+        JSONArray messageDetails = null;
+        try {
+            messageDetails = new JSONArray(response);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        TextView textView = (TextView)findViewById(R.id.textView2);
 
-        textView.setText(response);
+        fileWriter = new FileWriter(file.getAbsoluteFile());
+        BufferedWriter bw = new BufferedWriter(fileWriter);
+        bw.write(messageDetails.toString());
+        bw.close();
     }
-
-
+    
+    
 
 }
