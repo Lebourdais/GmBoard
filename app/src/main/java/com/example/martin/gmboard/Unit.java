@@ -1,7 +1,6 @@
 package com.example.martin.gmboard;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -48,7 +47,7 @@ public class Unit {
     public int getMaxHP() { return this.maxHP; }
     public int getCurrentHP() { return this.currentHP; }
     public Hashtable<String, Integer> getStats() { return this.stats; }
-    public boolean getPC() { return this.pc; }
+    public boolean isPC() { return this.pc; }
 
 
     public void loseHP (int amount){
@@ -79,7 +78,7 @@ public class Unit {
 
         String response = null;
         try {
-            response = FileHelper.readUnits(context);
+            response = FileHelper.readJsonFile(context, "unitstorage.json");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,13 +86,8 @@ public class Unit {
         Gson gson = new Gson();
         Type listType = new TypeToken<List<Unit>>(){}.getType();
         ArrayList<Unit> units = gson.fromJson(response, listType);
-        for(Unit unit : units){
-            Log.d("exists", "is "+name +" equal to "+unit.getName());
-            if(unit.getName().equals(name)){
-                Log.d("exists", "true");
-                return true;
-            }
-        }
+        for(Unit unit : units)
+            if (unit.getName().equals(name)) return true;
         return false;
     }
 

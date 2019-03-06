@@ -17,12 +17,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class FileHelper {
 
     // Prevents from instantiating the class
     private FileHelper(){}
+
+    /******************************************
+     *            METHOD ON UNITS             *
+     *****************************************/
 
     // Saves a unit to the unitstorage file
     public static void saveUnit(@NonNull Context context, Unit unit) throws IOException, JSONException {
@@ -55,7 +61,17 @@ public class FileHelper {
         Gson gson = new Gson();
         Type listType = new TypeToken<List<Unit>>(){}.getType();
         ArrayList<Unit> units = gson.fromJson(response, listType);
-        units.remove(unit);
+
+
+        Unit toRemove = null;
+        for(Unit u : units){
+            if(u.getName().equals(unit.getName())){
+                toRemove = u;
+            }
+        }
+        units.remove(toRemove);
+
+
         String json = gson.toJson(units, listType);
 
         fileWriter = new FileWriter(file.getAbsoluteFile());
@@ -68,23 +84,65 @@ public class FileHelper {
      * @param Context context
      * @param Unit newUnit : the modified unit
      */
-    public static void modifyUnit(Context context, Unit newUnit) throws IOException, JSONException {
+    public static void modifyUnit(Context context, Unit oldUnit, Unit newUnit) throws IOException, JSONException {
         String fileName = "unitstorage.json";
         String response = readJsonFile(context, fileName);
 
         Gson gson = new Gson();
         Type listType = new TypeToken<List<Unit>>(){}.getType();
         ArrayList<Unit> units = gson.fromJson(response, listType);
-        for(Unit oldUnit : units ){
-            if(oldUnit.getName().equals(newUnit.getName())){
-                units.remove(oldUnit);
+
+        Unit toRemove = null;
+        for(Unit u : units){
+            if(u.getName().equals(oldUnit.getName())){
+                toRemove = u;
             }
         }
+        units.remove(toRemove);
         units.add(newUnit);
 
         String json = gson.toJson(units, listType);
         writeJsonFile(context, fileName, json);
     }
+
+    public static List<Unit> getAllUnits(Context context){
+        String fileName = "unitstorage.json";
+
+        String response = null;
+        try {
+            response = readJsonFile(context, fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<Unit>>(){}.getType();
+        ArrayList<Unit> units = gson.fromJson(response, listType);
+
+        return sortUnits(units);
+    }
+
+    public static Unit getUnitByName(Context context, String name){
+        String fileName = "unitstorage.json";
+
+        String response = null;
+        try {
+            response = readJsonFile(context, fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<Unit>>(){}.getType();
+        ArrayList<Unit> units = gson.fromJson(response, listType);
+        for(Unit unit : units){
+            if(unit.getName().equals(name))
+                return unit;
+        }
+        return null;
+    }
+
+
 
     // Saves a List of unit to the liststorage file
     public static void saveUnitList(Context context, UnitList unitList) throws IOException, JSONException {
@@ -133,9 +191,30 @@ public class FileHelper {
         writeJsonFile(context, fileName, json);
     }
 
+    public static List<UnitList> getAllUnitLists(Context context){
+        String fileName = "liststorage.json";
+
+        String response = null;
+        try {
+            response = readJsonFile(context, fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<UnitList>>(){}.getType();
+        ArrayList<UnitList> unitLists = gson.fromJson(response, listType);
+
+        return sortUnitLists(unitLists);
+    }
+
+    /******************************************
+     *              PRIVATE METHODS           *
+     *****************************************/
+
     //Reads a Json file (Formatted as a JsonArray) [{...},{...}])
     //Returns the equivalent string
-    private static String readJsonFile(@NonNull Context context, String fileName) throws IOException {
+    public static String readJsonFile(@NonNull Context context, String fileName) throws IOException {
         File file = new File(context.getFilesDir(), fileName);
 
         FileReader fileReader = null;
@@ -185,5 +264,35 @@ public class FileHelper {
         BufferedWriter bw = new BufferedWriter(fileWriter);
         bw.write(json);
         bw.close();
+    }
+
+    // Sorts the List of Units by name
+    private static List<Unit> sortUnits(List<Unit> units){
+        Collections.sort( units, new Comparator<Unit>() {
+            @Override
+            public int compare(Unit a, Unit b) {
+                String valA = a.getName();
+                String valB = b.getName();
+
+                return valA.compareTo(valB);
+            }
+        });
+
+        return units;
+    }
+
+    // Sorts the List of UnitList by name
+    private static List<UnitList> sortUnitLists(List<UnitList> unitLists){
+        Collections.sort( unitLists, new Comparator<UnitList>() {
+            @Override
+            public int compare(UnitList a, UnitList b) {
+                String valA = a.getName();
+                String valB = b.getName();
+
+                return valA.compareTo(valB);
+            }
+        });
+
+        return unitLists;
     }
 }

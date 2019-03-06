@@ -39,4 +39,11 @@
     <string name="checkBoxPC">Player character ?</string>
     <string name="creationError">A unit with this name already exists.</string>
     <string name="creationError2">Please, fill all mandatory fields</string>
+    <string name="ButtonEdit">Edit</string>
+    <string name="ButtonDelete">Delete</string>
+    <string name="ButtonNewUnit">New unit</string>
+    <string name="ButtonNewList">New List</string>
+    <string name="DeletionValidation">Are you sure you want to delete</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
 </resources>

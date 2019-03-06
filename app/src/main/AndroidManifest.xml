@@ -26,18 +26,16 @@
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".UnitUi"
-            android:label="@string/title_activity_unit_creation"
-            android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".testUnitList"
+            android:name=".UnitCreationUi"
             android:label="@string/title_activity_unit_creation"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".Map"
             android:label="Map"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".UnitListCreationUi"
+            android:label="UnitListUi"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

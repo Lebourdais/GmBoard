@@ -4,19 +4,21 @@ import java.util.List;
 
 public class UnitList {
 
+    private String name;
     private List<Unit> units;
 
     public UnitList (List<Unit> pUnits){
         units = pUnits;
     }
 
+    public String getName(){ return name; }
     public List<Unit> getUnits(){ return units; }
 
     //Retourne une unité si elle est dans la liste
     // retourne null sinon
     public Unit getUnitByName(String unitName) {
         for(Unit unit : units){
-            if(unit.getName() == unitName)
+            if(unit.getName().equals(unitName))
                 return unit;
         }
         return null;
