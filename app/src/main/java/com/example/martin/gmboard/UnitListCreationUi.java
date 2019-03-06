@@ -10,19 +10,14 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.DragEvent;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.List;
+public class UnitListCreationUi extends AppCompatActivity implements View.OnDragListener {
 
-public class UnitListCreationUi extends AppCompatActivity {
-    private RecyclerView unitRecyclerView;
-    private RecyclerView unitListRecyclerView;
-    private RecyclerView.Adapter unitAdapter;
-    private RecyclerView.Adapter unitListAdapter;
     private Context context;
-    private List<Unit> units;
-    private List<UnitList> unitLists;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,30 +28,10 @@ public class UnitListCreationUi extends AppCompatActivity {
 
         context = getApplicationContext();
 
-        unitLists = FileHelper.getAllUnitLists(context);
 
-        DividerItemDecoration itemDecorator = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
-        itemDecorator.setDrawable(ContextCompat.getDrawable(context, R.drawable.layout_border));
+        populateUnitRecyclerView(context);
+        populateUnitListRecyclerView(context);
 
-
-        // Creation of the right most Recycler view containing a list of all the units available
-        unitRecyclerView = findViewById(R.id.UnitRecyclerView);
-        unitRecyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
-
-        unitRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        unitAdapter = new UnitAdapter(context);
-        unitRecyclerView.setAdapter(unitAdapter);
-
-        // Creation of the left most Recycler view containing a list of all the UnitLists available
-
-        unitListRecyclerView = findViewById(R.id.UnitListRecyclerView);
-        unitListRecyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
-
-        unitListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        unitListAdapter = new UnitListAdapter(unitLists);
-        unitListRecyclerView.setAdapter(unitListAdapter);
 
         Button newUnitButton = findViewById(R.id.ButtonNewUnit);
         newUnitButton.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +42,50 @@ public class UnitListCreationUi extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    public void populateUnitRecyclerView(Context context){
+
+        RecyclerView unitRecyclerView;
+        RecyclerView.Adapter unitAdapter;
+
+        unitRecyclerView = findViewById(R.id.UnitRecyclerView);
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(context, R.drawable.layout_border));
+        unitRecyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
+
+        unitRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        unitAdapter = new UnitAdapter(context);
+        unitRecyclerView.setAdapter(unitAdapter);
+    }
+
+    public void populateUnitListRecyclerView(Context context){
+
+        RecyclerView unitListRecyclerView;
+        RecyclerView.Adapter unitListAdapter;
+
+        unitListRecyclerView = findViewById(R.id.UnitListRecyclerView);
+
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(context, R.drawable.layout_border));
+
+        unitListRecyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
+
+        unitListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        unitListAdapter = new UnitListAdapter(context);
+        unitListRecyclerView.setAdapter(unitListAdapter);
+    }
+
+    public boolean onDrag(View view, DragEvent dragEvent){
+        View selectedView = (View) dragEvent.getLocalState();
+        RecyclerView rcvSelected = (RecyclerView) view;
+        int currentPosition = -1;
+
+        try{
+
+        }
     }
 
 }

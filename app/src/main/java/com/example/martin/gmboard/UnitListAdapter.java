@@ -1,5 +1,6 @@
 package com.example.martin.gmboard;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,11 +8,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UnitListAdapter  extends RecyclerView.Adapter<UnitListAdapter.UnitListViewHolder> {
 
+    private Context context;
     private List<UnitList> unitLists;
 
     @Override
@@ -20,12 +21,14 @@ public class UnitListAdapter  extends RecyclerView.Adapter<UnitListAdapter.UnitL
     }
 
     //Constructor
-    public UnitListAdapter(List<UnitList> pUnitLists){
-        unitLists = new ArrayList<UnitList>();
-        for(UnitList unitList : pUnitLists)
-            unitLists.add(unitList);
+    public UnitListAdapter(Context pContext){
+        context = pContext;
     }
 
+    public void loadDataSet(){
+        unitLists = FileHelper.getAllUnitLists(context);
+        notifyDataSetChanged();
+    }
     // Create new views (invoked by the layout manager
 
     public UnitListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
