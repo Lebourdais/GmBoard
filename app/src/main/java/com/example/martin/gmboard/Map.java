@@ -1,8 +1,10 @@
 package com.example.martin.gmboard;
 
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +26,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +45,8 @@ public class Map extends AppCompatActivity implements View.OnTouchListener {
     LayoutInflater inflater;
     List<Pin> listPins;
     ViewGroup containerView;
+    String createPinName;
+    boolean pinType;
     String note;
     String name;
     private android.widget.LinearLayout.LayoutParams layoutParams;
@@ -98,8 +103,9 @@ public class Map extends AppCompatActivity implements View.OnTouchListener {
                             }
                         }
                         if (!inButton) {
-                            Toast.makeText(Map.this, "Pin coordinates : " + String.valueOf(event.getX()) + "x" + String.valueOf(event.getY()), Toast.LENGTH_SHORT).show();
+
                             Pin newpin = new Pin(v.getContext(), event.getX(), event.getY(), false);
+                            callCreateDialog();
 
                             listPins.add(newpin);
                         }
@@ -206,6 +212,29 @@ public class Map extends AppCompatActivity implements View.OnTouchListener {
 //            }
 //            return true;
 //        }
+        private void callCreateDialog()
+        {
+            final Dialog myDialog = new Dialog(this);
+            myDialog.setContentView(R.layout.new_pin);
+            myDialog.setCancelable(false);
+            final EditText pinName = (EditText) myDialog.findViewById(R.id.writeMapName);
+            final Switch sw = (Switch) myDialog.findViewById(R.id.switch9);
+            Button button = myDialog.findViewById(R.id.SubmitPin);
+            myDialog.show();
+
+            button.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    createPinName=pinName.getText().toString();
+                    pinType = sw.isChecked();
+                    myDialog.cancel();
+                }
+            });
+
+
+        }
         @Override
         public boolean onTouch(View view, MotionEvent event) {
             switch (event.getActionMasked()) {
