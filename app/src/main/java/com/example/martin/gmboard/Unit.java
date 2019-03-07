@@ -78,11 +78,11 @@ public class Unit {
     public static boolean exists(Context context, String name){
 
         String response = null;
-        try {
-            response = FileHelper.readUnits(context);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            response = FileHelper.readUnits(context);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         Gson gson = new Gson();
         Type listType = new TypeToken<List<Unit>>(){}.getType();

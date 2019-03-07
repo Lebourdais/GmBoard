@@ -36,11 +36,11 @@ public class testUnitList extends AppCompatActivity {
 
         TextView tv = findViewById(R.id.textView2);
 
-        try {
-            tv.setText(FileHelper.readUnits(context));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            tv.setText(FileHelper.readUnits(context));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         Button b = (Button)findViewById(R.id.DeleteB);
         b.setOnClickListener(new View.OnClickListener() {
