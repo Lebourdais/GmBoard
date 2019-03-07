@@ -79,13 +79,14 @@ public class UnitListCreationUi extends AppCompatActivity implements View.OnDrag
     }
 
     public boolean onDrag(View view, DragEvent dragEvent){
-        View selectedView = (View) dragEvent.getLocalState();
-        RecyclerView rcvSelected = (RecyclerView) view;
-        int currentPosition = -1;
+//        View selectedView = (View) dragEvent.getLocalState();
+//        RecyclerView rcvSelected = (RecyclerView) view;
+//        int currentPosition = -1;
 
-        try{
-
-        }
+//        try{
+//
+//        }
+        return true;
     }
 
 }

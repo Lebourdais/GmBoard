@@ -85,10 +85,10 @@ public class UnitAdapter extends RecyclerView.Adapter<UnitAdapter.UnitViewHolder
             super(itemView);
             context = itemView.getContext();
             name =  itemView.findViewById(R.id.name);
-            stats = itemView.findViewById(R.id.stats);
-            notes = itemView.findViewById(R.id.notes);
-            edit = itemView.findViewById(R.id.ImageButtonEdit);
-            delete = itemView.findViewById(R.id.ImageButtonDelete);
+//            stats = itemView.findViewById(R.id.stats);
+//            notes = itemView.findViewById(R.id.notes);
+//            edit = itemView.findViewById(R.id.ImageButtonEdit);
+//            delete = itemView.findViewById(R.id.ImageButtonDelete);
 
         }
 
