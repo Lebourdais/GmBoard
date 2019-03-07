@@ -45,14 +45,14 @@ public class MainScreen extends AppCompatActivity {
         btnUnitTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this, UnitUi.class));
+                startActivity(new Intent(MainScreen.this, UnitCreationUi.class));
             }
         });
         Button btnUnitTest2 = (Button)findViewById(R.id.unittest2);;
         btnUnitTest2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this, testUnitList.class));
+                startActivity(new Intent(MainScreen.this, UnitListCreationUi.class));
             }
         });
 

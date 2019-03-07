@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.martin.gmboard">
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainScreen"
             android:label="@string/app_name"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".SoundBoard"
             android:label="@string/title_activity_sound_board"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <!--<activity-->
-            <!--android:name=".UnitUi"-->
-            <!--android:label="@string/title_activity_unit_creation"-->
-            <!--android:screenOrientation="landscape"-->
-            <!--android:theme="@style/AppTheme.NoActionBar"/>-->
-        <!--<activity-->
-            <!--android:name=".testUnitList"-->
-            <!--android:label="@string/title_activity_unit_creation"-->
-            <!--android:screenOrientation="landscape"-->
-            <!--android:theme="@style/AppTheme.NoActionBar"/>-->
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".UnitCreationUi"
+            android:label="@string/title_activity_unit_creation"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".Map"
             android:label="Map"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".UnitListCreationUi"
+            android:label="UnitListUi"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
