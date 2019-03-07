@@ -21,6 +21,7 @@ public class UnitListCreationUi extends AppCompatActivity implements View.OnDrag
     private RecyclerView.Adapter unitListAdapter;
     private RecyclerView unitRecyclerView;
     private RecyclerView.Adapter unitAdapter;
+    private Button newListButton;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +32,11 @@ public class UnitListCreationUi extends AppCompatActivity implements View.OnDrag
 
         context = getApplicationContext();
 
+        unitListAdapter = new UnitListAdapter(context);
+        unitAdapter = new UnitAdapter(context);
 
         populateUnitRecyclerView(context);
         populateUnitListRecyclerView(context);
-
 
         Button newUnitButton = findViewById(R.id.ButtonNewUnit);
         newUnitButton.setOnClickListener(new View.OnClickListener() {
@@ -42,10 +44,23 @@ public class UnitListCreationUi extends AppCompatActivity implements View.OnDrag
             public void onClick(View v) {
                 Intent i = new Intent(UnitListCreationUi.this, UnitCreationUi.class);
                 i.putExtra("Creation", 1);
-                startActivity(i);
-                unitAdapter.loadDataSet();
+                startActivityForResult(i, 1);
             }
         });
+        newListButton = findViewById(R.id.ButtonNewList);
+        newListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                unitListRecyclerView.setAdapter(new UnitInListAdapter());
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((UnitAdapter)unitAdapter).loadDataSet();
+        unitAdapter.notifyDataSetChanged();
     }
 
     public void populateUnitRecyclerView(Context context){
@@ -59,7 +74,7 @@ public class UnitListCreationUi extends AppCompatActivity implements View.OnDrag
 
         unitRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        unitAdapter = new UnitAdapter(context);
+
         unitRecyclerView.setAdapter(unitAdapter);
     }
 
@@ -74,7 +89,7 @@ public class UnitListCreationUi extends AppCompatActivity implements View.OnDrag
 
         unitListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        unitListAdapter = new UnitListAdapter(context);
+
         unitListRecyclerView.setAdapter(unitListAdapter);
     }
 
@@ -88,5 +103,7 @@ public class UnitListCreationUi extends AppCompatActivity implements View.OnDrag
 //        }
         return true;
     }
+
+
 
 }
