@@ -17,7 +17,10 @@ import android.widget.Button;
 public class UnitListCreationUi extends AppCompatActivity implements View.OnDragListener {
 
     private Context context;
-
+    private RecyclerView unitListRecyclerView;
+    private RecyclerView.Adapter unitListAdapter;
+    private RecyclerView unitRecyclerView;
+    private RecyclerView.Adapter unitAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,14 +43,14 @@ public class UnitListCreationUi extends AppCompatActivity implements View.OnDrag
                 Intent i = new Intent(UnitListCreationUi.this, UnitCreationUi.class);
                 i.putExtra("Creation", 1);
                 startActivity(i);
+                unitAdapter.loadDataSet();
             }
         });
     }
 
     public void populateUnitRecyclerView(Context context){
 
-        RecyclerView unitRecyclerView;
-        RecyclerView.Adapter unitAdapter;
+
 
         unitRecyclerView = findViewById(R.id.UnitRecyclerView);
         DividerItemDecoration itemDecorator = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
@@ -61,9 +64,6 @@ public class UnitListCreationUi extends AppCompatActivity implements View.OnDrag
     }
 
     public void populateUnitListRecyclerView(Context context){
-
-        RecyclerView unitListRecyclerView;
-        RecyclerView.Adapter unitListAdapter;
 
         unitListRecyclerView = findViewById(R.id.UnitListRecyclerView);
 
@@ -79,13 +79,14 @@ public class UnitListCreationUi extends AppCompatActivity implements View.OnDrag
     }
 
     public boolean onDrag(View view, DragEvent dragEvent){
-        View selectedView = (View) dragEvent.getLocalState();
-        RecyclerView rcvSelected = (RecyclerView) view;
-        int currentPosition = -1;
-
-        try{
-
-        }
+//        View selectedView = (View) dragEvent.getLocalState();
+//        RecyclerView rcvSelected = (RecyclerView) view;
+//        int currentPosition = -1;
+//
+//        try{
+//
+//        }
+        return true;
     }
 
 }

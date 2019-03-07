@@ -95,7 +95,7 @@ public class UnitAdapter extends RecyclerView.Adapter<UnitAdapter.UnitViewHolder
         public void display(Unit unit){
             currentUnit = unit;
             name.setText(unit.getName());
-            Hashtable<String, Integer> htStats= unit.getStats();
+//            Hashtable<String, Integer> htStats= unit.getStats();
 
             String s = "HP : "+unit.getMaxHP()+" | ATK : "+unit.getAttack()+" | DEF : "+unit.getDefense()+"\n" +
                     "STR : "+unit.getStats().get("STR")+
