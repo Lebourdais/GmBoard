@@ -36,7 +36,7 @@ public class MainScreen extends AppCompatActivity {
         btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this, SoundBoard.class));
+                startActivity(new Intent(MainScreen.this, Map.class));
             }
         });
 

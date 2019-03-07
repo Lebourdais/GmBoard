@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageButton android:id="@+id/draggable_view"
-    android:background="@mipmap/ic_launcher"
+<com.example.martin.gmboard.Pin
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/draggable_view"
+    android:background="@mipmap/ic_launcher"
     android:layout_height="0dp"
     android:layout_width="0dp"/>

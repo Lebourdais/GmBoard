@@ -1,48 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:id="@+id/container"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="4"
+    >
     <LinearLayout
-        android:layout_width="1270dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/yposTxt"
-            android:layout_width="match_parent"
-            android:layout_height="165dp"
-            android:gravity="center" />
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:weightSum = "4">
 
+        <EditText
+            android:id="@+id/editMapName"
+            android:layout_width="wrap_content"
+            android:layout_height="200dip"
+            android:longClickable="false"
+            android:layout_weight="1"
+            android:text="DefaultName" />
+
+        <Button
+            android:id="@+id/submitName"
+            android:layout_width="wrap_content"
+            android:layout_height="200dip"
+            android:layout_weight="1"
+            android:text="Submit" />
         <LinearLayout
             android:layout_width="match_parent"
+            android:id="@+id/container"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
+            android:weightSum="4"
             android:gravity="center"
-            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="horizontal"
             >
-            <ImageView
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3" />
+            <com.example.martin.gmboard.PinView
                 android:id="@+id/imageMap"
-                android:layout_width="500dip"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:src="@drawable/swordcoastmaplowres" />
-            android:src="@drawable/pic"/>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <!--<ImageView-->
+                <!--android:id="@+id/imageMap"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:scaleType="fitXY"-->
+                <!--android:layout_weight="1"-->
+                <!--android:src="@drawable/swordcoastmaplowres" />-->
+
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/MapName"
+            android:layout_width="wrap_content"
+            android:layout_height="200dip"
+            android:layout_weight="1"
+            android:text="DefaultName" />
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="3"
+        >
+        <EditText
+            android:id="@+id/writeNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Notes for the map"
+            android:inputType="textMultiLine"
+            android:longClickable="false"
+            android:layout_weight="1"
+            />
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="350dip"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Submit" />
+        <TextView
+            android:id="@+id/Note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
     </LinearLayout>
 
-
-    <ImageButton
-        android:id="@+id/draggable_view"
-        android:background="@mipmap/ic_launcher"
-        android:layout_gravity="bottom|left"
-        android:layout_marginBottom="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp" />
-
-</FrameLayout>
+</LinearLayout>
