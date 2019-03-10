@@ -218,11 +218,11 @@ public class FileHelper {
         File file = new File(context.getFilesDir(), fileName);
 
         FileReader fileReader = null;
-        FileWriter fileWriter = null;
-        BufferedReader bufferedReader = null;
-        BufferedWriter bufferedWriter = null;
+        FileWriter fileWriter;
+        BufferedReader bufferedReader;
+        BufferedWriter bufferedWriter;
 
-        String response = null;
+        String response;
 
         if(!file.exists()) {
             try {

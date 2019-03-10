@@ -48,7 +48,7 @@ public class MainScreen extends AppCompatActivity {
                 startActivity(new Intent(MainScreen.this, UnitCreationUi.class));
             }
         });
-        Button btnUnitTest2 = (Button)findViewById(R.id.unittest2);;
+        Button btnUnitTest2 = (Button)findViewById(R.id.unittest2);
         btnUnitTest2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

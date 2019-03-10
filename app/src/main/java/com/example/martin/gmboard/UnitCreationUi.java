@@ -1,6 +1,7 @@
 package com.example.martin.gmboard;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -115,6 +116,9 @@ public class UnitCreationUi extends AppCompatActivity {
             Unit unit = new Unit(name, maxHP, attack, defense, notes, stats, pc);
             try {
                 FileHelper.saveUnit(context, unit);
+                Intent intent = new Intent();
+                intent.putExtra("OK", 1);
+                setResult(1, intent);
                 finish();
             } catch (IOException e) {
                 e.printStackTrace();
