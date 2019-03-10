@@ -1,24 +1,10 @@
 package com.example.martin.gmboard;
 
-import android.app.Dialog;
-import android.content.ClipData;
-import android.content.ClipDescription;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.PointF;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.Layout;
-import android.util.Log;
-import android.view.DragEvent;
-
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,21 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
-import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 public class Map extends AppCompatActivity implements View.OnTouchListener,RadioGroup.OnCheckedChangeListener {
@@ -191,17 +169,17 @@ public class Map extends AppCompatActivity implements View.OnTouchListener,Radio
         public void saveUnit(String name){
 
         }
-        public void loadMap(String name){
-            List<Map> listMap; //TODO Get the object
-            Map newmap ;
-            for(Map m : listMap){
-                if (m.getName().equals(name)){
-                    newmap = m;
-                }
-            }
-            this= newmap;
-            
-        }
+//        public void loadMap(String name){
+//            List<Map> listMap; //TODO Get the object
+//            Map newmap ;
+//            for(Map m : listMap){
+//                if (m.getName().equals(name)){
+//                    newmap = m;
+//                }
+//            }
+//            //this= newmap;
+//
+//        }
         private void doOnPinTypeChanged(RadioGroup group, int checkedId) {
             int checkedRadioId = group.getCheckedRadioButtonId();
 

@@ -36,7 +36,8 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".UnitListCreationUi"
             android:label="UnitListUi"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>
