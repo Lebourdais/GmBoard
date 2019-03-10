@@ -27,7 +27,7 @@ public class FileHelper {
     private FileHelper(){}
 
     /******************************************
-     *            METHOD ON UNITS             *
+     *            METHODS ON UNITS             *
      *****************************************/
 
     // Saves a unit to the unitstorage file

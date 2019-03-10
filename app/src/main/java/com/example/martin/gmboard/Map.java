@@ -5,6 +5,10 @@ import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +29,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -34,19 +39,32 @@ import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class Map extends AppCompatActivity implements View.OnTouchListener {
+public class Map extends AppCompatActivity implements View.OnTouchListener,RadioGroup.OnCheckedChangeListener {
     float dX;
     float dY;
     String msg;
     int lastAction;
     LayoutInflater inflater;
+    static int mapid = 0;
+    static int poiid = 0;
+    static ArrayList<Unit> unitList;
     List<Pin> listPins;
+
     ViewGroup containerView;
+    private final int paintColor = Color.BLACK;
+    // defines paint and canvas
+
+    private List<Point> circlePoints;
     String createPinName;
-    boolean pinType;
+    int pinType;
+    float xmap;
+    float ymap;
+    float wmap;
+    float hmap;
     String note;
     String name;
     private android.widget.LinearLayout.LayoutParams layoutParams;
@@ -78,38 +96,70 @@ public class Map extends AppCompatActivity implements View.OnTouchListener {
         };
     }
 
+    public Map(Context context, Map parent, String nom){
+
+    }
     @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             FrameLayout.LayoutParams params1;
             FrameLayout.LayoutParams params2;
-
+            unitList=new ArrayList<Unit>();
             setContentView(R.layout.activity_map);
             PinView imageView = (PinView)findViewById(R.id.imageMap);
+            int[] coordmap={0,0};
+            imageView.getLocationOnScreen(coordmap);
+            xmap = coordmap[0];
+            ymap = coordmap[1];
+            imageView.measure(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+            wmap=imageView.getMeasuredWidth();
+            hmap=imageView.getMeasuredHeight();
+            RadioGroup radioGroupPin = (RadioGroup) findViewById(R.id.radioGroup_pinType);
+            radioGroupPin.setOnCheckedChangeListener(this);
             imageView.setImage(ImageSource.resource(R.drawable.swordcoastmaplowres));
             imageView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
+
                     if (event.getAction() == MotionEvent.ACTION_DOWN){
-                        boolean inButton = false;
-                        Pin currentclick = null;
                         float x = event.getX();
                         float y = event.getY();
-                        for(int i=0;i<listPins.size();i++){
-                            if (x>listPins.get(i).getposX() && x<listPins.get(i).getposX()+50 &&
-                                    y>listPins.get(i).getposY() && y<listPins.get(i).getposX()+50){
-                                inButton=true;
-                                currentclick = listPins.get(i);
+                        if (x>xmap && x<(xmap+wmap) && y>ymap && y<(y+hmap)){
+                            boolean inButton = false;
+                            Pin currentclick = null;
+
+                            for(int i=0;i<listPins.size();i++){
+                                if (x>listPins.get(i).getposX()-10 && x<listPins.get(i).getposX()+10 &&
+                                        y>listPins.get(i).getposY()-10 && y<listPins.get(i).getposX()+10){
+                                    inButton=true;
+                                    currentclick = listPins.get(i);
+                                    String rep = "This is the "+currentclick.getName();
+                                    Toast.makeText(Map.this, rep, Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+                            if (!inButton) {
+
+                                Pin newpin = new Pin(v.getContext(), event.getX(), event.getY(), false);
+                                newpin.setName((((EditText) findViewById(R.id.pinName)).getText()).toString());
+                                if (pinType == 1){
+                                   newpin.setType(1);
+                                   saveMap(newpin.getName());
+                                }
+                                if (pinType == 2){
+                                    newpin.setType(2);
+                                    savePOI();
+                                }
+                                if (pinType == 3){
+                                    newpin.setType(3);
+                                    saveUnit(newpin.getName());
+                                }
+                                ((PinView)v).touch(event,pinType);
+                                listPins.add(newpin);
                             }
                         }
-                        if (!inButton) {
-
-                            Pin newpin = new Pin(v.getContext(), event.getX(), event.getY(), false);
-                            callCreateDialog();
-
-                            listPins.add(newpin);
-                        }
                     }
+
                     return true;
                 }
             });
@@ -119,121 +169,50 @@ public class Map extends AppCompatActivity implements View.OnTouchListener {
             inflater = (LayoutInflater)getApplicationContext().getSystemService (Context.LAYOUT_INFLATER_SERVICE);
             containerView = (ViewGroup) findViewById(R.id.container);
              // inflater .. create the instance once, reuse for all the next view
-            Pin pin1 = (Pin) inflater.inflate(R.layout.draggable,null);
-            Pin pin2 = (Pin) inflater.inflate(R.layout.draggable,null);
+
             ((Button)findViewById(R.id.submit)).setOnClickListener(this.validateInput);
             ((Button)findViewById(R.id.submitName)).setOnClickListener(this.validateNameInput);
 
-
-//            pin1.setOnLongClickListener(this);
-//            pin2.setOnLongClickListener(this);
-//            pin1.setOnDragListener(this);
-//            pin2.setOnDragListener(this);
-//            pin1.setOnTouchListener(this);
-//            pin2.setOnTouchListener(this);
-            listPins.add(pin1);
-            listPins.add(pin2);
-            containerView.addView(pin1);
-            containerView.addView(pin2);
-
     }
+        public String getName(){
+            return this.name;
+        }
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            doOnPinTypeChanged(group, checkedId);
+        }
+        public void saveMap(String name){
+           Map newmap= new Map(this.getApplicationContext(),this,name);
+            //TODO Save object
+        }
+        public void savePOI(){
 
-//        @Override
-//        public boolean onLongClick(View v) {
-//            ClipData.Item item = new ClipData.Item((CharSequence)v.getTag());
-//            String[] mimeTypes = {ClipDescription.MIMETYPE_TEXT_PLAIN};
-//
-//            ClipData dragData = new ClipData(v.getTag().toString(),mimeTypes, item);
-//            View.DragShadowBuilder myShadow = new View.DragShadowBuilder(listPins.get(1));
-//
-//            v.startDrag(dragData,myShadow,null,0);
-//            return true;
-//        }
-//        @Override
-//        public boolean onTouch(View v, MotionEvent event) {
-//            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//                ClipData data = ClipData.newPlainText("", "");
-//                Toast.makeText(Map.this, "CLicked", Toast.LENGTH_SHORT).show();
-//                Pin img = listPins.get(1);
-//                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(img);
-//
-//                img.startDrag(data, shadowBuilder, img, 0);
-//                img.setVisibility(View.INVISIBLE);
-//                return true;
-//            } else {
-//                return false;
-//            }
-//        }
-//        @Override
-//        public boolean onDrag(View v, DragEvent event) {
-//            switch(event.getAction()) {
-//                case DragEvent.ACTION_DRAG_STARTED:
-//                    layoutParams = (LinearLayout.LayoutParams)v.getLayoutParams();
-//                    Log.d(msg, "Action is DragEvent.ACTION_DRAG_STARTED");
-//
-//                    // Do nothing
-//                    break;
-//
-//                case DragEvent.ACTION_DRAG_ENTERED:
-//                    Log.d(msg, "Action is DragEvent.ACTION_DRAG_ENTERED");
-//                    int x_cord = (int) event.getX();
-//                    int y_cord = (int) event.getY();
-//                    break;
-//
-//                case DragEvent.ACTION_DRAG_EXITED :
-//                    Log.d(msg, "Action is DragEvent.ACTION_DRAG_EXITED");
-//                    x_cord = (int) event.getX();
-//                    y_cord = (int) event.getY();
-//                    layoutParams.leftMargin = x_cord;
-//                    layoutParams.topMargin = y_cord;
-//                    v.setLayoutParams(layoutParams);
-//                    break;
-//
-//                case DragEvent.ACTION_DRAG_LOCATION  :
-//                    Log.d(msg, "Action is DragEvent.ACTION_DRAG_LOCATION");
-//                    x_cord = (int) event.getX();
-//                    y_cord = (int) event.getY();
-//                    String str = x_cord+" / "+y_cord;
-//                    ((TextView) findViewById(R.id.Note)).setText(str);
-//                    break;
-//
-//                case DragEvent.ACTION_DRAG_ENDED   :
-//                    Log.d(msg, "Action is DragEvent.ACTION_DRAG_ENDED");
-//
-//                    // Do nothing
-//                    break;
-//
-//                case DragEvent.ACTION_DROP:
-//                    Log.d(msg, "ACTION_DROP event");
-//
-//                    // Do nothing
-//                    break;
-//                default: break;
-//            }
-//            return true;
-//        }
-        private void callCreateDialog()
-        {
-            final Dialog myDialog = new Dialog(this);
-            myDialog.setContentView(R.layout.new_pin);
-            myDialog.setCancelable(false);
-            final EditText pinName = (EditText) myDialog.findViewById(R.id.writeMapName);
-            final Switch sw = (Switch) myDialog.findViewById(R.id.switch9);
-            Button button = myDialog.findViewById(R.id.SubmitPin);
-            myDialog.show();
+        }
+        public void saveUnit(String name){
 
-            button.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    createPinName=pinName.getText().toString();
-                    pinType = sw.isChecked();
-                    myDialog.cancel();
+        }
+        public void loadMap(String name){
+            List<Map> listMap; //TODO Get the object
+            Map newmap ;
+            for(Map m : listMap){
+                if (m.getName().equals(name)){
+                    newmap = m;
                 }
-            });
+            }
+            this= newmap;
+            
+        }
+        private void doOnPinTypeChanged(RadioGroup group, int checkedId) {
+            int checkedRadioId = group.getCheckedRadioButtonId();
 
-
+            if(checkedRadioId== R.id.radioButton_Map) {
+                pinType = 1;
+            } else if(checkedRadioId== R.id.radioButton_POI ) {
+                pinType = 2;
+            } else if(checkedRadioId== R.id.radioButton_Unit) {
+                pinType = 3;
+            }
+            Toast.makeText(Map.this, String.valueOf(pinType), Toast.LENGTH_SHORT).show();
         }
         @Override
         public boolean onTouch(View view, MotionEvent event) {

@@ -23,6 +23,7 @@ public class UnitListAdapter  extends RecyclerView.Adapter<UnitListAdapter.UnitL
     //Constructor
     public UnitListAdapter(Context pContext){
         context = pContext;
+        loadDataSet();
     }
 
     public void loadDataSet(){
