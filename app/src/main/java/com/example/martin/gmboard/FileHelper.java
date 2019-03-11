@@ -207,6 +207,41 @@ public class FileHelper {
 
         return sortUnitLists(unitLists);
     }
+    public static List<Map> getAllMap(Context context){
+        String fileName = "mapstorage.json";
+
+        String response = null;
+        try {
+            response = readJsonFile(context, fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<Map>>(){}.getType();
+        ArrayList<Map> mapLists = gson.fromJson(response, listType);
+
+        return mapLists;
+    }
+    public static void saveMap(@NonNull Context context, Map map) throws IOException, JSONException{
+
+        String fileName = "mapstorage.json";
+        File file = new File(context.getFilesDir(), fileName);
+        FileWriter fileWriter = null;
+
+        String response = readJsonFile(context, fileName);
+
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<Map>>(){}.getType();
+        ArrayList<Map> mapLists = gson.fromJson(response, listType);
+
+        mapLists.add(map);
+        String json = gson.toJson(mapLists, listType);
+        fileWriter = new FileWriter(file.getAbsoluteFile());
+        BufferedWriter bw = new BufferedWriter(fileWriter);
+        bw.write(json);
+        bw.close();
+    }
 
     /******************************************
      *              PRIVATE METHODS           *

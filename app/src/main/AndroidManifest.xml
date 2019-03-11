@@ -31,8 +31,8 @@
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".Map"
-            android:label="Map"
+            android:name=".MapUI"
+            android:label="MapUI"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".UnitListCreationUi"
             android:label="UnitListUi"
