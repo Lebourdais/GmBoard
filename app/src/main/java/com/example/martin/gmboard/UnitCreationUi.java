@@ -1,5 +1,6 @@
 package com.example.martin.gmboard;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -13,14 +14,12 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONException;
-
 import java.io.IOException;
 import java.util.Hashtable;
 
 public class UnitCreationUi extends AppCompatActivity {
 
-    private static Context context;
+    private Context context;
     private Unit oldUnit; // Only used when editing a unit
     private EditText nameET;
     private EditText maxHPET;
@@ -87,7 +86,7 @@ public class UnitCreationUi extends AppCompatActivity {
     public void createNewUnit(View v) {
         if(Unit.exists(context, ((EditText)findViewById(R.id.unitName)).getText().toString()))
             Toast.makeText(context, getString(R.string.creationError), Toast.LENGTH_LONG).show();
-        else if ( !checkMandatoryFields() ){
+        else if (checkMandatoryFields()){
             Toast.makeText(context, getString(R.string.creationError2), Toast.LENGTH_LONG).show();
         } else {
 
@@ -104,7 +103,7 @@ public class UnitCreationUi extends AppCompatActivity {
             final int charisma = Integer.parseInt(cha.getText().toString());
             boolean pc = pcB.isChecked();
 
-            Hashtable stats = new Hashtable<String, Integer>() {{
+            Hashtable<String, Integer> stats = new Hashtable<String, Integer>() {{
                 put("STR", strength);
                 put("DEX", dexterity);
                 put("CON", constitution);
@@ -122,15 +121,13 @@ public class UnitCreationUi extends AppCompatActivity {
                 finish();
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
         }
     }
 
 
     public void editUnit(View v){
-        if ( !checkMandatoryFields() ){
+        if (checkMandatoryFields()){
             Toast.makeText(context, getString(R.string.creationError2), Toast.LENGTH_LONG).show();
         } else {
             String name = nameET.getText().toString();
@@ -146,7 +143,7 @@ public class UnitCreationUi extends AppCompatActivity {
             final int charisma = Integer.parseInt(cha.getText().toString());
             boolean pc = pcB.isChecked();
 
-            Hashtable stats = new Hashtable<String, Integer>() {{
+            Hashtable<String, Integer> stats = new Hashtable<String, Integer>() {{
                 put("STR", strength);
                 put("DEX", dexterity);
                 put("CON", constitution);
@@ -163,26 +160,26 @@ public class UnitCreationUi extends AppCompatActivity {
                 finish();
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
         }
     }
 
     //Returns true if no mandatory field is empty
     private boolean checkMandatoryFields(){
-        return !(TextUtils.isEmpty( ((EditText)findViewById(R.id.unitMaxHP)).getText().toString().trim() ) ||
-                TextUtils.isEmpty( ((EditText)findViewById(R.id.unitAttack)).getText().toString().trim() ) ||
-                TextUtils.isEmpty( ((EditText)findViewById(R.id.unitDefense)).getText().toString().trim() ) ||
-                TextUtils.isEmpty( ((EditText)findViewById(R.id.unitStrength)).getText().toString().trim() ) ||
-                TextUtils.isEmpty( ((EditText)findViewById(R.id.unitDexterity)).getText().toString().trim() ) ||
-                TextUtils.isEmpty( ((EditText)findViewById(R.id.unitConstitution)).getText().toString().trim() ) ||
-                TextUtils.isEmpty( ((EditText)findViewById(R.id.unitIntelligence)).getText().toString().trim() ) ||
-                TextUtils.isEmpty( ((EditText)findViewById(R.id.unitWisdom)).getText().toString().trim() )  ||
-                TextUtils.isEmpty( ((EditText)findViewById(R.id.unitCharisma)).getText().toString().trim()));
+        return TextUtils.isEmpty(((EditText) findViewById(R.id.unitMaxHP)).getText().toString().trim()) ||
+                TextUtils.isEmpty(((EditText) findViewById(R.id.unitAttack)).getText().toString().trim()) ||
+                TextUtils.isEmpty(((EditText) findViewById(R.id.unitDefense)).getText().toString().trim()) ||
+                TextUtils.isEmpty(((EditText) findViewById(R.id.unitStrength)).getText().toString().trim()) ||
+                TextUtils.isEmpty(((EditText) findViewById(R.id.unitDexterity)).getText().toString().trim()) ||
+                TextUtils.isEmpty(((EditText) findViewById(R.id.unitConstitution)).getText().toString().trim()) ||
+                TextUtils.isEmpty(((EditText) findViewById(R.id.unitIntelligence)).getText().toString().trim()) ||
+                TextUtils.isEmpty(((EditText) findViewById(R.id.unitWisdom)).getText().toString().trim()) ||
+                TextUtils.isEmpty(((EditText) findViewById(R.id.unitCharisma)).getText().toString().trim());
     }
 
     //
+    @SuppressLint("SetTextI18n")
+    @SuppressWarnings("ConstantConditions")
     private void loadUnit(){
         Hashtable<String, Integer> stats = oldUnit.getStats();
         nameET.setText(oldUnit.getName());

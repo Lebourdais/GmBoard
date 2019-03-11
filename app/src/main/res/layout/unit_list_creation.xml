@@ -54,4 +54,46 @@
         app:layout_constraintEnd_toEndOf="@+id/UnitListRecyclerView"
         app:layout_constraintStart_toStartOf="@+id/UnitListRecyclerView"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/ButtonCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Button"
+        app:layout_constraintBottom_toTopOf="@+id/UnitListRecyclerView"
+        app:layout_constraintEnd_toEndOf="@+id/UnitListRecyclerView"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/TILName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toBottomOf="@+id/ButtonNewList"
+        app:layout_constraintEnd_toStartOf="@+id/ButtonCreate"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/UnitListRecyclerView"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/listName"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:ems="10"
+            android:hint="@string/Name"
+            android:inputType="textPersonName"
+            android:selectAllOnFocus="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.design.widget.TextInputLayout>
+
 </android.support.constraint.ConstraintLayout>
