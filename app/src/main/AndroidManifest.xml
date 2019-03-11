@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.martin.gmboard">
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/app_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
         <activity
             android:name=".MainScreen"
             android:label="@string/app_name"
@@ -36,6 +38,10 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".UnitListCreationUi"
             android:label="UnitListUi"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="landscape"></activity>
+        <activity android:name=".CombatUi"
+            android:label="Combat"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="landscape"></activity>
     </application>

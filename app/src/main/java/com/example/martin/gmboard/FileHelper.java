@@ -323,7 +323,7 @@ class FileHelper {
 
         return mapLists;
     }
-    public static void saveMap(@NonNull Context context, Map map) throws IOException, JSONException{
+    public static void saveMap(@NonNull Context context, Map map) throws IOException {
 
         String fileName = "mapstorage.json";
         File file = new File(context.getFilesDir(), fileName);

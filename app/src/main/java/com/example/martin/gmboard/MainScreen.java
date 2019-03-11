@@ -2,15 +2,15 @@ package com.example.martin.gmboard;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainScreen extends AppCompatActivity {
 
@@ -22,14 +22,10 @@ public class MainScreen extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/nodesto_caps_condensed_bold.ttf");
+        TextView tv = findViewById(R.id.titleView);
+        tv.setTypeface(typeface);
+
         Button btnplay = (Button)findViewById(R.id.buttonCreate);
 
 
@@ -45,7 +41,7 @@ public class MainScreen extends AppCompatActivity {
         btnUnitTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this, UnitCreationUi.class));
+                startActivity(new Intent(MainScreen.this, CombatUi.class));
             }
         });
         Button btnUnitTest2 = (Button)findViewById(R.id.unittest2);

@@ -68,7 +68,7 @@ public class UnitListCreationUi extends AppCompatActivity implements UnitListCre
             @Override
             public void onClick(View view) {
                 edit = false;
-                unitListRecyclerView.setAdapter(unitInListAdapter );
+                unitListRecyclerView.setAdapter(unitInListAdapter);
                 swapButtons(true);
 
             }
@@ -102,7 +102,8 @@ public class UnitListCreationUi extends AppCompatActivity implements UnitListCre
             listName.setVisibility(View.VISIBLE);
             newListButton.setVisibility(View.INVISIBLE);
             unitListRecyclerView.setOnDragListener( ((UnitAdapter )unitInListAdapter).getDragInstance());
-            listName.getEditText().setText(oldUnitList.getName());
+            if(oldUnitList != null)
+                listName.getEditText().setText(oldUnitList.getName());
         } else {
             newListButton.setVisibility(View.VISIBLE);
             createButton.setVisibility(View.GONE);
@@ -140,7 +141,7 @@ public class UnitListCreationUi extends AppCompatActivity implements UnitListCre
     }
 
     public void populateUnitListRecyclerView(UnitListCreationListener activity){
-        unitListAdapter = new UnitListAdapter(context, activity);
+        unitListAdapter = new UnitListAdapter(context, UnitListAdapter.ITEM_TYPE_EDITABLE,activity);
         unitListRecyclerView = findViewById(R.id.UnitListRecyclerView);
         DividerItemDecoration itemDecorator = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
         itemDecorator.setDrawable(ContextCompat.getDrawable(context, R.drawable.layout_border));

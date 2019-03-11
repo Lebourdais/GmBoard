@@ -23,22 +23,25 @@
             android:text="Name"
             android:textStyle="bold"
             android:layout_weight="0.8"
-            style="@android:style/TextAppearance.Large"/>
+            style="@android:style/TextAppearance.Large"
+            android:textSize="26sp"/>
 
         <ImageButton
             android:id="@+id/ImageButtonEdit"
+            android:background="@null"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            app:srcCompat="@android:drawable/ic_menu_edit"
+            app:srcCompat="@drawable/edit_button"
             android:layout_weight="0.1"/>
 
         <ImageButton
             android:id="@+id/ImageButtonDelete"
+            android:background="@null"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            app:srcCompat="@android:drawable/ic_menu_delete"
+            app:srcCompat="@drawable/crossed_swords"
             android:layout_weight="0.1" />
     </LinearLayout>
 

@@ -5,6 +5,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -35,10 +36,11 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     static final int ITEM_TYPE_QUANTIFIABLE = 1;
     static final int ITEM_TYPE_COMBAT = 2;
 
-    UnitAdapter(Context pContext, int pItemViewType){
+    UnitAdapter(Context pContext, int pItemViewType, UnitList pUnits){
         context = pContext;
         this.listener = null;
         itemViewType = pItemViewType;
+        units = FileHelper.getUnitsFromList(context, pUnits);
         params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(15,15,15,15);
         loadDataSet();
@@ -89,8 +91,8 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             View view = inflater.inflate(R.layout.list_unit_cell, parent, false);
             return new UnitViewHolderEditable(view);
         } else {
-            View view = inflater.inflate(R.layout.combat_layout, parent, false);
-            return new UnitViewHolderEditable(view);
+            View view = inflater.inflate(R.layout.unit_in_list_cell, parent, false);
+            return new UnitViewHolderCombat(view);
         }
     }
 
@@ -120,10 +122,10 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ((UnitViewHolderEditable)holder).layout.setOnDragListener(new DragToListListener());
             ((UnitViewHolderEditable)holder).display(unit);
         } else {
-            ((UnitViewHolderEditable)holder).layout.setOnTouchListener(this);
-            ((UnitViewHolderEditable)holder).layout.setTag(position);
-            ((UnitViewHolderEditable)holder).layout.setOnDragListener(new DragToListListener());
-            ((UnitViewHolderEditable)holder).display(unit);
+            ((UnitViewHolderCombat)holder).layout.setOnTouchListener(this);
+            ((UnitViewHolderCombat)holder).layout.setTag(position);
+            ((UnitViewHolderCombat)holder).layout.setOnDragListener(new DragToListListener());
+            ((UnitViewHolderCombat)holder).display(unit);
         }
     }
 
@@ -196,6 +198,9 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             notes = itemView.findViewById(R.id.notes);
             edit = itemView.findViewById(R.id.ImageButtonEdit);
             delete = itemView.findViewById(R.id.ImageButtonDelete);
+
+            Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/nodesto_caps_condensed_bold.ttf");
+            name.setTypeface(typeface);
         }
 
         public void display(Unit unit){
@@ -277,6 +282,9 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             number = itemView.findViewById(R.id.number);
             plus = itemView.findViewById(R.id.plus);
             minus = itemView.findViewById(R.id.minus);
+
+            Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/nodesto_caps_condensed_bold.ttf");
+            name.setTypeface(typeface);
         }
 
         public void display(Unit unit, int quantity){
@@ -341,16 +349,20 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public UnitViewHolderCombat(View itemView) {
             super(itemView);
             context = itemView.getContext();
+            layout = itemView.findViewById(R.id.unitInListQuantifiable);
             name =  itemView.findViewById(R.id.name);
             stats = itemView.findViewById(R.id.stats);
             notes = itemView.findViewById(R.id.notes);
             number = itemView.findViewById(R.id.number);
             plus = itemView.findViewById(R.id.plus);
             minus = itemView.findViewById(R.id.minus);
+
+            Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/nodesto_caps_condensed_bold.ttf");
+            name.setTypeface(typeface);
         }
 
         @SuppressLint("SetTextI18n")
-        public void display(Unit unit, int quantity){
+        public void display(Unit unit){
             currentUnit = unit;
             name.setText(unit.getName());
 
@@ -363,14 +375,14 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     " | CHA : "+ unit.getStats().get("CHA");
             stats.setText(s);
             notes.setText(unit.getNotes());
-            number.setText(Integer.toString(quantity));
+            number.setText(Integer.toString(unit.getCurrentHP()));
 
             plus.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
                     int value = Integer.parseInt(number.getText().toString());
+                    if(value < currentUnit.getMaxHP())
                         value += 1;
-                        UnitAdapter.this.add(currentUnit);
                     if(value < 0){
                         value = 0;
                     }
@@ -383,7 +395,6 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 public void onClick(View view){
                     int value = Integer.parseInt(number.getText().toString());
                     if(value > 0){
-                        UnitAdapter.this.remove(currentUnit);
                         value -= 1;
                     }
                     if(value < 0)
