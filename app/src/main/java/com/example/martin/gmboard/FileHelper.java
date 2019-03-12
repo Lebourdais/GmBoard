@@ -329,20 +329,7 @@ class FileHelper {
     public static void saveMap(@NonNull Context context, Map map) throws IOException, JSONException {
         Gson gson = new Gson();
         String fileName = "mapstorage.json";
-        List<Map> list = getAllMap(context);
         Type listType = new TypeToken<List<Map>>(){}.getType();
-        Map toRemove = null;
-        for(Map m : list){
-            if (m.getName().equals(map.getName())){
-               toRemove=m;
-            }
-        }
-        if (toRemove != null){
-            list.remove(toRemove);
-        }
-
-        String json1 = gson.toJson(list, listType);
-        writeJsonFile(context, fileName, json1);
 
 
         File file = new File(context.getFilesDir(), fileName);
