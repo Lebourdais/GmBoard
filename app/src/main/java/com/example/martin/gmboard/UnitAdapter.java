@@ -10,6 +10,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,6 +29,7 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     implements View.OnTouchListener {
     Context context;
     private List<Unit> units;
+    private List<Pair<Unit, Integer>> unitsInList;
     private int itemViewType;
     private UnitListCreationListener listener;
     private LinearLayout.LayoutParams params;
@@ -41,6 +43,14 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         this.listener = null;
         itemViewType = pItemViewType;
         units = FileHelper.getUnitsFromList(context, pUnits);
+        unitsInList = new ArrayList<>();
+
+        for(Unit unit : units){
+            int quantity = Collections.frequency(units, unit);
+            Pair<Unit, Integer> p = new Pair<>(unit, quantity);
+            if(!unitsInList.contains(p))
+                unitsInList.add(p);
+        }
         params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(15,15,15,15);
         loadDataSet();
@@ -59,18 +69,31 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         this.listener = listener;
         context = pContext;
         itemViewType = pItemViewType;
+        unitsInList = new ArrayList<>();
         params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(15,15,15,15);
         if (pUnits != null)
             units = FileHelper.getUnitsFromList(context, pUnits);
         else
             units = new ArrayList<>();
+        for(Unit unit : units){
+            int quantity = Collections.frequency(units, unit);
+            Pair<Unit, Integer> p = new Pair<>(unit, quantity);
+            if(!unitsInList.contains(p))
+                unitsInList.add(p);
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        if (units != null)
-            return units.size();
+        if(itemViewType == ITEM_TYPE_QUANTIFIABLE){
+            if(unitsInList != null)
+                return unitsInList.size();
+        } else {
+            if (units != null)
+                return units.size();
+        }
         return 0;
     }
 
@@ -104,24 +127,21 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Unit unit = units.get(position);
+
         if(itemViewType == ITEM_TYPE_QUANTIFIABLE){
-            ((UnitViewHolderQuantifiable) holder).layout.setLayoutParams(params);
-            if( (units.indexOf(unit) != units.lastIndexOf(unit)) && (position != units.indexOf(unit))){
-                ((UnitViewHolderQuantifiable) holder).layout.setLayoutParams( new LinearLayout.LayoutParams(0,0));
-                ((UnitViewHolderQuantifiable) holder).layout.setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
-            }
-                int quantity = Collections.frequency(units, unit);
-                ((UnitViewHolderQuantifiable) holder).layout.setOnTouchListener(this);
-                ((UnitViewHolderQuantifiable) holder).layout.setTag(position);
-                ((UnitViewHolderQuantifiable) holder).layout.setOnDragListener(new DragToListListener());
-                ((UnitViewHolderQuantifiable) holder).display(unit, quantity);
+            Pair<Unit, Integer> p = unitsInList.get(position);
+            ((UnitViewHolderQuantifiable) holder).layout.setOnTouchListener(this);
+            ((UnitViewHolderQuantifiable) holder).layout.setTag(position);
+            ((UnitViewHolderQuantifiable) holder).layout.setOnDragListener(new DragToListListener());
+            ((UnitViewHolderQuantifiable) holder).display(p);
         } else if (itemViewType == ITEM_TYPE_EDITABLE){
+            Unit unit = units.get(position);
             ((UnitViewHolderEditable)holder).layout.setOnTouchListener(this);
             ((UnitViewHolderEditable)holder).layout.setTag(position);
             ((UnitViewHolderEditable)holder).layout.setOnDragListener(new DragToListListener());
             ((UnitViewHolderEditable)holder).display(unit);
         } else {
+            Unit unit = units.get(position);
             ((UnitViewHolderCombat)holder).layout.setOnTouchListener(this);
             ((UnitViewHolderCombat)holder).layout.setTag(position);
             ((UnitViewHolderCombat)holder).layout.setOnDragListener(new DragToListListener());
@@ -133,26 +153,111 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             return units;
     }
 
-    private void remove(Unit unit){
-            units.remove(unit);
-    }
-
-    void add(Unit unit){
-            this.units.add(unit);
-    }
-
-    void add(int position, Unit unit){
-        this.units.add(position, unit);
+    List<Pair<Unit, Integer>> getPairs(){
+        return unitsInList;
     }
 
     void remove(int position){
         units.remove(position);
+
+        if(itemViewType == ITEM_TYPE_QUANTIFIABLE) {
+
+            Unit toRemove = unitsInList.get(position).getLeft();
+            while (units.remove(toRemove)) ;
+            unitsInList.remove(position);
+        }
+    }
+
+    private void remove(Unit unit){
+        units.remove(unit);
+        if(itemViewType == ITEM_TYPE_QUANTIFIABLE) {
+            Unit toRemove = null;
+            for(Pair<Unit, Integer> p : unitsInList){
+                if(p.getLeft().getName().equals(unit.getName())){
+                    p.setRight(p.getRight()-1);
+                    toRemove = p.getLeft();
+                }
+            }
+            while (units.remove(toRemove)) ;
+        }
+    }
+
+    void add(Unit unit){
+        this.units.add(unit);
+        if(itemViewType == ITEM_TYPE_QUANTIFIABLE){
+            boolean in = false;
+            Pair<Unit, Integer> pp = null;
+            for(Pair<Unit, Integer> p : unitsInList){
+                if(p.getLeft().getName().equals(unit.getName())){
+                    pp = p;
+                    in = true;
+                }
+            }
+            if(!in)
+                unitsInList.add(new Pair<Unit, Integer>(unit, 1));
+            else {
+                unitsInList.remove(pp);
+                pp.setRight(pp.getRight()+1);
+                unitsInList.add(pp);
+            }
+        }
+    }
+
+    void add(int position, Unit unit){
+        this.units.add(position, unit);
+        if(itemViewType == ITEM_TYPE_QUANTIFIABLE){
+            boolean in = false;
+            Pair<Unit, Integer> pp = null;
+            for(Pair<Unit, Integer> p : unitsInList){
+                if(p.getLeft().getName().equals(unit.getName())){
+                    pp = p;
+                    in = true;
+                }
+            }
+            if(!in)
+                unitsInList.add(position, new Pair<Unit, Integer>(unit, 1));
+            else {
+                unitsInList.remove(pp);
+                pp.setRight(pp.getRight()+1);
+                unitsInList.add(position, pp);
+            }
+        }
+    }
+
+    void add(Pair<Unit, Integer> p){
+        unitsInList.add(p);
+        for(int i = 0 ; i < p.getRight()+1 ; i++){
+            units.add(p.getLeft());
+        }
+        notifyDataSetChanged();
+    }
+
+    void add(int position, Pair<Unit, Integer> p){
+        Log.d("raaa", "Ici");
+        for(Pair<Unit, Integer> ppppp : unitsInList){
+            Log.d("raaa", "Got "+ppppp.getLeft().getName());
+        }
+            Log.d("raaa", "Removed"+p.getLeft().getName());
+            unitsInList.remove(p);
+            unitsInList.add(position, p);
+            for(int i = 0 ; i < p.getRight()+1 ; i++){
+                Log.d("raaa", "Adding "+i+" units");
+                units.add(p.getLeft());
+
+        }
+
     }
 
     void removeAll(int position){
-        Unit unitToRemove = units.get(position);
-        while (units.remove(unitToRemove));
-
+//        Unit unitToRemove = units.get(position);
+//        while (units.remove(unitToRemove));
+        if(itemViewType == ITEM_TYPE_QUANTIFIABLE){
+            Unit toRemove = unitsInList.get(position).getLeft();
+            while (units.remove(toRemove));
+            unitsInList.remove(position);
+        } else {
+            units.remove(position);
+        }
     }
 
     DragToListListener getDragInstance() {
@@ -189,7 +294,7 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         private Unit currentUnit;
 
-        public UnitViewHolderEditable(View itemView) {
+        UnitViewHolderEditable(View itemView) {
             super(itemView);
             context = itemView.getContext();
             layout = itemView.findViewById(R.id.unitInListEditable);
@@ -203,7 +308,7 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             name.setTypeface(typeface);
         }
 
-        public void display(Unit unit){
+        void display(Unit unit){
             currentUnit = unit;
             name.setText(unit.getName());
 
@@ -270,9 +375,11 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         private ImageButton plus;
         private ImageButton minus;
 
+        private Pair<Unit, Integer> currentPair;
         private Unit currentUnit;
+        private int quantity;
 
-        public UnitViewHolderQuantifiable(View itemView) {
+        UnitViewHolderQuantifiable(View itemView) {
             super(itemView);
             context = itemView.getContext();
             layout = itemView.findViewById(R.id.unitInListQuantifiable);
@@ -287,19 +394,22 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             name.setTypeface(typeface);
         }
 
-        public void display(Unit unit, int quantity){
-            currentUnit = unit;
-            name.setText(unit.getName());
+        void display(Pair<Unit, Integer> p){
+            currentPair = p;
+            currentUnit = p.getLeft();
+            quantity = p.getRight();
 
-            String s = "HP : "+unit.getMaxHP()+" | ATK : "+unit.getAttack()+" | DEF : "+unit.getDefense()+"\n" +
-                    "STR : "+unit.getStats().get("STR")+
-                    " | DEX : "+unit.getStats().get("DEX")+
-                    " | CON : "+unit.getStats().get("CON")+
-                    " | INT : "+unit.getStats().get("INT")+
-                    " | WIS : "+unit.getStats().get("WIS")+
-                    " | CHA : "+ unit.getStats().get("CHA");
+            name.setText(currentUnit.getName());
+
+            String s = "HP : "+currentUnit.getMaxHP()+" | ATK : "+currentUnit.getAttack()+" | DEF : "+currentUnit.getDefense()+"\n" +
+                    "STR : "+currentUnit.getStats().get("STR")+
+                    " | DEX : "+currentUnit.getStats().get("DEX")+
+                    " | CON : "+currentUnit.getStats().get("CON")+
+                    " | INT : "+currentUnit.getStats().get("INT")+
+                    " | WIS : "+currentUnit.getStats().get("WIS")+
+                    " | CHA : "+ currentUnit.getStats().get("CHA");
             stats.setText(s);
-            notes.setText(unit.getNotes());
+            notes.setText(currentUnit.getNotes());
             number.setText(Integer.toString(quantity));
 
             plus.setOnClickListener(new View.OnClickListener(){
@@ -400,6 +510,11 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     if(value < 0)
                         value = 0;
                     number.setText(Integer.toString(value));
+                    if(value == 0)
+                        UnitAdapter.this.remove(currentUnit);
+                        UnitAdapter.this.notifyDataSetChanged();
+
+
                 }
             });
         }

@@ -61,8 +61,8 @@ public class UnitList {
     }
 
     void addUnit(Unit u){
-        if(units.containsKey(name)){
-            units.put(name, units.get(name)+1);
+        if(units.containsKey(u.getName())){
+            units.put(name, units.get(u.getName())+1);
         } else {
             units.put(name, 1);
         }

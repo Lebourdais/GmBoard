@@ -31,15 +31,18 @@
             android:name=".UnitCreationUi"
             android:label="@string/title_activity_unit_creation"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".MapUI"
             android:label="MapUI"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".UnitListCreationUi"
             android:label="UnitListUi"
             android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".CombatUi"
             android:label="Combat"
             android:theme="@style/AppTheme.NoActionBar"

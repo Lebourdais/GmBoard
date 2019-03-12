@@ -23,7 +23,7 @@
     <string name="unitIntelligenceTitle">Intelligence (*)</string>
     <string name="unitWisdomTitle">Sagesse (*)</string>
     <string name="unitCharismaTitle">Charisme (*)</string>
-    <string name="unitNotesTitle">Notes supplémentaires</string>
+    <string name="unitNotesTitle"> Notes supplémentaires </string>
     <string name="unitCreationConfirm">Créer</string>
     <string name="ButtonUnitTest">Unit Test</string>
     <string name="Name">Nom (*)</string>
@@ -48,4 +48,6 @@
     <string name="DeletionValidation">Êtes-vous sûr de vouloir supprimer</string>
     <string name="Yes">Oui</string>
     <string name="No">Non</string>
+    <string name="screenTooSmall">Cette app ne fonctionne pas sur des appareils aussi petits. L\'app va mainteannt quitter.</string>
+    <string name="quit">Quitter</string>
 </resources>

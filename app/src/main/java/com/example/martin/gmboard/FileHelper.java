@@ -2,6 +2,7 @@ package com.example.martin.gmboard;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -25,6 +26,7 @@ import java.util.List;
 class FileHelper {
 
     private final static String LIST = "liststorage.json";
+    private final static String PC_LIST = "pcliststorage.json";
     private final static String UNIT = "unitstorage.json";
     private final static String PC = "playerstorage.json";
 
@@ -254,11 +256,13 @@ class FileHelper {
         // Removing unit from old file
         String fileName;
         if(oldUnitList.isPC())
-            fileName = PC;
+            fileName = PC_LIST;
         else
-            fileName = UNIT;
+            fileName = LIST;
         String response = readJsonFile(context, fileName);
 
+        Log.d("halp", "oldname "+oldUnitList.getName());
+        Log.d("halp", "new name "+newUnitList.getName());
 
         Gson gson = new Gson();
         Type listType = new TypeToken<List<UnitList>>(){}.getType();
@@ -271,13 +275,14 @@ class FileHelper {
             }
         }
         unitLists.remove(toRemove);
+
         String json = gson.toJson(unitLists, listType);
         writeJsonFile(context, fileName, json);
 
         if(newUnitList.isPC())
-            fileName = PC;
+            fileName = PC_LIST;
         else
-            fileName = UNIT;
+            fileName = LIST;
 
 
         response = readJsonFile(context, fileName);
@@ -292,7 +297,7 @@ class FileHelper {
     }
 
     private static void addUnitToPCList(Context context, Unit unit) throws IOException {
-        String response = readJsonFile(context, LIST);
+        String response = readJsonFile(context, PC_LIST);
         Gson gson = new Gson();
         Type listType = new TypeToken<List<UnitList>>(){}.getType();
         ArrayList<UnitList> unitLists = gson.fromJson(response, listType);
@@ -306,9 +311,29 @@ class FileHelper {
         toAddTo.addUnit(unit);
 
         String json = gson.toJson(unitLists, listType);
-        writeJsonFile(context, LIST, json);
+        writeJsonFile(context, PC_LIST, json);
 
     }
+
+    private static void removeUnitFromPCList(Context context, Unit unit) throws IOException {
+        String response = readJsonFile(context, PC_LIST);
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<UnitList>>(){}.getType();
+        ArrayList<UnitList> unitLists = gson.fromJson(response, listType);
+
+        UnitList toAddTo = new UnitList(true);
+        for(UnitList u : unitLists){
+            if(u.isPC()){
+                toAddTo = u;
+            }
+        }
+        toAddTo.addUnit(unit);
+
+        String json = gson.toJson(unitLists, listType);
+        writeJsonFile(context, PC_LIST, json);
+
+    }
+
     public static List<Map> getAllMap(Context context){
         String fileName = "mapstorage.json";
 
@@ -329,6 +354,20 @@ class FileHelper {
         Gson gson = new Gson();
         String fileName = "mapstorage.json";
         Type listType = new TypeToken<List<Map>>(){}.getType();
+
+
+        Map toRemove = null;
+        for(Map m : list){
+            if (m.getName().equals(map.getName())){
+               toRemove=m;
+            }
+        }
+        if (toRemove != null){
+            list.remove(toRemove);
+        }
+
+        String json1 = gson.toJson(list, listType);
+        writeJsonFile(context, fileName, json1);
 
 
         File file = new File(context.getFilesDir(), fileName);
@@ -402,6 +441,20 @@ class FileHelper {
         BufferedWriter bw = new BufferedWriter(fileWriter);
         bw.write(json);
         bw.close();
+    }
+
+    static void wipeJsonFile(@NonNull Context context) throws IOException {
+        File file = new File(context.getFilesDir(), LIST);
+
+        FileWriter fileWriter;
+        BufferedWriter bufferedWriter;
+
+                file.createNewFile();
+                fileWriter = new FileWriter(file.getAbsoluteFile());
+                bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.write("[]");
+                bufferedWriter.close();
+
     }
 
     // Sorts the List of Units by name

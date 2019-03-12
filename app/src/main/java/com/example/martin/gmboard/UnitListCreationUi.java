@@ -76,17 +76,17 @@ public class UnitListCreationUi extends AppCompatActivity implements UnitListCre
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("save", "save method right here");
+                Log.d("halp", "save method right here");
                 if(!edit) {
                     if (createUnitList()) {
-                        Log.d("save", "save method done");
+                        Log.d("halp", "save method done");
                         unitListRecyclerView.setAdapter(unitListAdapter);
                         ((UnitListAdapter) unitListAdapter).loadDataSet();
                         swapButtons(false);
                     }
                 } else {
                     if ( editUnitList()) {
-                        Log.d("save", "save method done");
+                        Log.d("halp", "edit method done");
                         unitListRecyclerView.setAdapter(unitListAdapter);
                         ((UnitListAdapter) unitListAdapter).loadDataSet();
                         swapButtons(false);
@@ -119,6 +119,7 @@ public class UnitListCreationUi extends AppCompatActivity implements UnitListCre
     @Override
     public void setOldUnitList(UnitList u) {
         oldUnitList = u;
+        Log.d("Edit bug", " create with name "+oldUnitList.getName());
     }
 
     @Override
@@ -152,7 +153,7 @@ public class UnitListCreationUi extends AppCompatActivity implements UnitListCre
     }
 
     public boolean createUnitList(){
-
+        Log.d("halp", " in create list ");
         if (UnitList.exists(context, ((EditText) findViewById(R.id.listName)).getText().toString())) {
             Toast.makeText(context, getString(R.string.creationError3), Toast.LENGTH_LONG).show();
             return false;
@@ -174,6 +175,7 @@ public class UnitListCreationUi extends AppCompatActivity implements UnitListCre
     }
 
     public boolean editUnitList(){
+        Log.d("halp", " in new list "+oldUnitList.getName());
         if (UnitList.exists(context, ((EditText) findViewById(R.id.listName)).getText().toString())) {
             Toast.makeText(context, getString(R.string.creationError3), Toast.LENGTH_LONG).show();
             return false;        }

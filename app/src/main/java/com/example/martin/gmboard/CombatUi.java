@@ -37,7 +37,7 @@ public class CombatUi extends AppCompatActivity {
         units.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         units.setLayoutManager(new LinearLayoutManager(this));
         LinearLayout layout = findViewById(R.id.combatLayout);
-
+        
         layout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

@@ -125,7 +125,9 @@ public class UnitListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     listener.enableEdition();
                     listener.setOldUnitList(currentUnitList);
                     listener.swapButtons(true);
-                    rv.setAdapter(new UnitAdapter(context, UnitAdapter.ITEM_TYPE_QUANTIFIABLE, currentUnitList, UnitListAdapter.this.getListener()));
+                    UnitAdapter ua = new UnitAdapter(context, UnitAdapter.ITEM_TYPE_QUANTIFIABLE, currentUnitList, UnitListAdapter.this.getListener());
+                    rv.setAdapter(ua);
+                    rv.setOnDragListener(ua.getDragInstance());
                 }
             });
 
@@ -186,7 +188,9 @@ public class UnitListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onClick(View v) {
                     RecyclerView rv = UnitListAdapter.this.getRecyclerView();
-                    rv.setAdapter(new UnitAdapter(context, UnitAdapter.ITEM_TYPE_COMBAT, currentUnitList));
+                    UnitAdapter ua = new UnitAdapter(context, UnitAdapter.ITEM_TYPE_COMBAT, currentUnitList);
+                    rv.setAdapter(ua);
+                    rv.setOnDragListener(ua.getDragInstance());
                 }
             });
         }
