@@ -77,6 +77,17 @@ public class PinView extends SubsamplingScaleImageView {
         circlePoints=c;
     }
 
+    public List<Integer> getTypePoints() {
+        return typePoints;
+    }
+
+    public void setTypePoints(List<Integer> typePoints) {
+        this.typePoints = typePoints;
+    }
+
+    public void refresh(){
+            invalidate();
+    }
     public boolean touch(MotionEvent event, int type) {
             float touchX = event.getX();
             float touchY = event.getY();

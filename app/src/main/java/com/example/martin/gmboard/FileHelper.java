@@ -2,9 +2,12 @@ package com.example.martin.gmboard;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -323,16 +326,30 @@ class FileHelper {
 
         return mapLists;
     }
-    public static void saveMap(@NonNull Context context, Map map) throws IOException, JSONException{
-
+    public static void saveMap(@NonNull Context context, Map map) throws IOException, JSONException {
+        Gson gson = new Gson();
         String fileName = "mapstorage.json";
+        List<Map> list = getAllMap(context);
+        Type listType = new TypeToken<List<Map>>(){}.getType();
+        Map toRemove = null;
+        for(Map m : list){
+            if (m.getName().equals(map.getName())){
+               toRemove=m;
+            }
+        }
+        if (toRemove != null){
+            list.remove(toRemove);
+        }
+
+        String json1 = gson.toJson(list, listType);
+        writeJsonFile(context, fileName, json1);
+
+
         File file = new File(context.getFilesDir(), fileName);
         FileWriter fileWriter = null;
 
         String response = readJsonFile(context, fileName);
 
-        Gson gson = new Gson();
-        Type listType = new TypeToken<List<Map>>(){}.getType();
         ArrayList<Map> mapLists = gson.fromJson(response, listType);
 
         mapLists.add(map);

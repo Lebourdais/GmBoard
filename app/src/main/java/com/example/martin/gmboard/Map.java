@@ -20,10 +20,11 @@ public class Map{
     static ArrayList<Unit> unitList;
     List<Pin> listPins;
 
-    ViewGroup containerView;
+
     // defines paint and canvas
 
     private List<Point> circlePoints;
+    private List<Integer> listType;
 
     int pinType;
     float xmap;
@@ -63,8 +64,12 @@ public class Map{
         return image;
     }
 
-    public ViewGroup getContainerView() {
-        return containerView;
+    public List<Integer> getListType() {
+        return listType;
+    }
+
+    public void setListType(List<Integer> listType) {
+        this.listType = listType;
     }
 
     public int getLastAction() {
@@ -99,11 +104,26 @@ public class Map{
         this.hmap = hmap;
     }
 
+    public void setWmap(float wmap) {
+        this.wmap = wmap;
+    }
+
+    public void setXmap(float xmap) {
+        this.xmap = xmap;
+    }
+
+    public void setYmap(float ymap) {
+        this.ymap = ymap;
+    }
+
     public void setImage(int image) {
         this.image = image;
     }
 
-
+    public List<Pin> addListPins(Pin p) {
+        listPins.add(p);
+        return listPins;
+    }
 
     public void setListPins(List<Pin> listPins) {
         this.listPins = listPins;
@@ -119,11 +139,17 @@ public class Map{
         super();
         this.parent_name = parent;
         this.name = nom;
+        listPins=new ArrayList<Pin>();
+        circlePoints = new ArrayList<Point>();
+        listType = new ArrayList<Integer>();
     }
     public Map(){
         super();
         this.parent_name = "";
-        this.name = "Default";
+        this.name = "main";
+        listPins=new ArrayList<Pin>();
+        listType = new ArrayList<Integer>();
+        circlePoints = new ArrayList<Point>();
     }
 
         public String getName(){
