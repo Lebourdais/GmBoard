@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -28,6 +30,7 @@ import java.util.List;
 public class MapUI extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener{
     public Map map;
     public PinView imageView;
+    public RecyclerView rv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,21 @@ public class MapUI extends AppCompatActivity implements RadioGroup.OnCheckedChan
         setContentView(R.layout.activity_map);
         imageView = (PinView)findViewById(R.id.imageMap);
         int[] coordmap={0,0};
+        map.note = "map de départ";
+        map.name = "main";
+        if(!existMap(getApplicationContext(),map.getName())) {
+            try {
+
+                FileHelper.saveMap(getApplicationContext(), map);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        rv = (RecyclerView) findViewById(R.id.list);
+
+        rv.setLayoutManager(new LinearLayoutManager(this));
+
+        rv.setAdapter(new MapAdapter(getApplicationContext(),this));
         imageView.getLocationOnScreen(coordmap);
         map.xmap = coordmap[0];
         map.ymap = coordmap[1];
@@ -69,6 +87,14 @@ public class MapUI extends AppCompatActivity implements RadioGroup.OnCheckedChan
                                 currentclick = map.listPins.get(i);
                                 String rep = "map is the "+currentclick.getName();
                                 Toast.makeText(MapUI.this, rep, Toast.LENGTH_SHORT).show();
+                                if(!existMap(getApplicationContext(),map.getName())) {
+                                    try {
+
+                                        FileHelper.saveMap(getApplicationContext(), map);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                                 loadMap(getApplicationContext(),currentclick.getName());
                             }
                         }
@@ -79,12 +105,13 @@ public class MapUI extends AppCompatActivity implements RadioGroup.OnCheckedChan
                             if (map.pinType == 1){
                                 newpin.setType(1);
                                 Map newmap = new Map(getApplicationContext(),map.getName(),newpin.name);
-                                try{
-                                    FileHelper.saveMap(getApplicationContext(),newmap);
-                                }catch (Exception e){
-                                    e.printStackTrace();
+                                if(!existMap(getApplicationContext(),newpin.name)) {
+                                    try {
+                                        FileHelper.saveMap(getApplicationContext(), newmap);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-
                             }
                             if (map.pinType == 2){
                                 newpin.setType(2);
@@ -109,20 +136,9 @@ public class MapUI extends AppCompatActivity implements RadioGroup.OnCheckedChan
             }
         });
 
-        map.note = "";
-        map.name = "main";
-        try{
-            FileHelper.saveMap(getApplicationContext(),map);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        ((Button)findViewById(R.id.returne)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadMap(getApplicationContext(),map.parent_name);
-            }
-        });
+
+
+
 
 
     // inflater .. create the instance once, reuse for all the next view
@@ -142,9 +158,20 @@ public class MapUI extends AppCompatActivity implements RadioGroup.OnCheckedChan
     public void saveUnit(String name){
 
     }
+    public boolean existMap(Context context,String name){
+        List<Map> listMap  = FileHelper.getAllMap(context);
+        for(Map m : listMap){
+            Log.d("name","name = "+m.getName()+" wanted = "+name+" check = "+m.getName().equals(name));
+            if (m.getName().equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
     public void loadMap(Context context,String name){
         List<Map> listMap  = FileHelper.getAllMap(context);
         Log.d("list",String.valueOf(listMap));
+
         Map newmap = null;
         for(Map m : listMap){
             Log.d("name","name = "+m.getName()+" wanted = "+name+" check = "+m.getName().equals(name));
@@ -158,6 +185,8 @@ public class MapUI extends AppCompatActivity implements RadioGroup.OnCheckedChan
         imageView.getLocationOnScreen(coordmap);
         map.xmap = coordmap[0];
         map.ymap = coordmap[1];
+        String rep = "map is the "+map.getName();
+        Toast.makeText(MapUI.this, rep, Toast.LENGTH_SHORT).show();
         imageView.measure(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         map.wmap=imageView.getMeasuredWidth();
         map.hmap=imageView.getMeasuredHeight();
@@ -165,6 +194,7 @@ public class MapUI extends AppCompatActivity implements RadioGroup.OnCheckedChan
         imageView.setCirclePoints(map.getCirclePoints());
         imageView.setTypePoints(map.getListType());
         imageView.refresh();
+        rv.getAdapter().notifyDataSetChanged();
     }
     private void doOnPinTypeChanged(RadioGroup group, int checkedId) {
         int checkedRadioId = group.getCheckedRadioButtonId();
