@@ -31,7 +31,7 @@ public class SoundboardPlayUi extends AppCompatActivity implements SoundboardLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sound_board);
+        setContentView(R.layout.music_layout);
 
         if(ContextCompat.checkSelfPermission(SoundboardPlayUi.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
@@ -46,7 +46,7 @@ public class SoundboardPlayUi extends AppCompatActivity implements SoundboardLis
         } else {
             context = getApplicationContext();
 
-            DividerItemDecoration itemDecorator = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
+            DividerItemDecoration itemDecorator = new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL);
             itemDecorator.setDrawable(ContextCompat.getDrawable(context, R.drawable.layout_border));
 
             rvTop = findViewById(R.id.topSoundRV);
@@ -56,11 +56,11 @@ public class SoundboardPlayUi extends AppCompatActivity implements SoundboardLis
             top = FileHelper.getPlaylist(context, SongAdapter.RV_TOP);
             bot = FileHelper.getPlaylist(context, SongAdapter.RV_BOT);
 
-           // rvTop.addItemDecoration(itemDecorator);
+            rvTop.addItemDecoration(itemDecorator);
             rvTop.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
             rvTop.setAdapter(new SongAdapter(context, SongAdapter.ITEM_VIEW_TYPE_PLAY, SongAdapter.RV_TOP, top, this));
 
-            //rvBot.addItemDecoration(itemDecorator);
+            rvBot.addItemDecoration(itemDecorator);
             rvBot.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
             rvBot.setAdapter(new SongAdapter(context, SongAdapter.ITEM_VIEW_TYPE_PLAY, SongAdapter.RV_BOT, bot, this));
 

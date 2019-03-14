@@ -1,13 +1,9 @@
 package com.example.martin.gmboard;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -36,50 +32,36 @@ public class MainScreen extends AppCompatActivity {
         btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this, CombatUi.class));
-            }
-        });
-
-        Button btnUnitTest = (Button)findViewById(R.id.buttonUnitTest);
-
-        btnUnitTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this, SoundboardCreationUi.class));
-            }
-        });
-        Button btnUnitTest2 = (Button)findViewById(R.id.unittest2);
-        btnUnitTest2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this, UnitListCreationUi.class));
+                startActivity(new Intent(MainScreen.this, SoundboardPlayUi.class));
             }
         });
 
 
-        int screenSize = getResources().getConfiguration().screenLayout &
-                Configuration.SCREENLAYOUT_SIZE_MASK;
 
-        switch(screenSize) {
-            case Configuration.SCREENLAYOUT_SIZE_NORMAL:
-            case Configuration.SCREENLAYOUT_SIZE_SMALL:
-                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case DialogInterface.BUTTON_NEUTRAL:
-                                //finish();
-                        }
-                    }
-                };
-
-                Context context = getApplicationContext();
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage(getString(R.string.screenTooSmall)).setNeutralButton(context.getString(R.string.quit), dialogClickListener);
-
-                AlertDialog alert = builder.create();
-                alert.show();
-        }
+        // NE PAS DECOMMENTER POUR LA PRESENTATION
+//        int screenSize = getResources().getConfiguration().screenLayout &
+//                Configuration.SCREENLAYOUT_SIZE_MASK;
+//
+//        switch(screenSize) {
+//            case Configuration.SCREENLAYOUT_SIZE_NORMAL:
+//            case Configuration.SCREENLAYOUT_SIZE_SMALL:
+//                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        switch (which) {
+//                            case DialogInterface.BUTTON_NEUTRAL:
+//                                //finish();
+//                        }
+//                    }
+//                };
+//
+//                Context context = getApplicationContext();
+//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                builder.setMessage(getString(R.string.screenTooSmall)).setNeutralButton(context.getString(R.string.quit), dialogClickListener);
+//
+//                AlertDialog alert = builder.create();
+//                alert.show();
+//        }
 
 
 
