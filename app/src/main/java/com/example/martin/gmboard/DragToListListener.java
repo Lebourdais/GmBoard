@@ -33,14 +33,26 @@ public class DragToListListener implements View.OnDragListener {
                 final int llItem = R.id.unitInListEditable;
                 final int unitRV = R.id.UnitRecyclerView;
                 final int unitListRV = R.id.UnitListRecyclerView;
-
+                final int unitCombatRV = R.id.combatRV;
+                Log.d("raaa",
+                        "viewId : "+viewId+
+                        " llItem : "+llItem+
+                        " unitRV : "+unitRV+
+                        " unitListRV : "+unitListRV+
+                        " unitCombat : "+unitCombatRV);
                 switch (viewId) {
                     case llItem:
                     case unitRV:
                     case unitListRV:
-
+                    case unitCombatRV:
+                    default:
+                        Log.d("raaa",
+                                "viewId : "+viewId);
                         RecyclerView target;
                         switch (viewId) {
+                            case unitCombatRV:
+                                target = v.getRootView().findViewById(unitCombatRV);
+                                break;
                             case unitRV:
                                 target = v.getRootView().findViewById(unitRV);
                                 break;
@@ -53,49 +65,68 @@ public class DragToListListener implements View.OnDragListener {
                         }
                         if (viewSource != null) {
                             RecyclerView source = (RecyclerView) viewSource.getParent();
-
                             UnitAdapter adapterSource = (UnitAdapter) source.getAdapter();
-
                             int positionSource = (int) viewSource.getTag();
-
                             Unit unit = adapterSource.getDataSet().get(positionSource);
-
                             UnitAdapter adapterTarget = (UnitAdapter) target.getAdapter();
 
-                            // If the view is from the RV containing the Unit List
-                            // Dragging it off the RV removes it from the RV
-                            if(adapterSource.getItemViewType(positionSource) == UnitAdapter.ITEM_TYPE_QUANTIFIABLE ){
-                                adapterSource.removeAll(positionSource);
-                                adapterSource.notifyDataSetChanged();
+                            Log.d("raaa", "INITIAL Source : "+adapterSource.getItemViewType(positionSource)+" target : "+adapterTarget.getItemViewType(positionTarget));
 
-                            }
 
-                            // If the view comes from the RV containing all the units and is dragged
-                            // To an other position in this RV, we remove it
-                            if((adapterSource.getItemViewType(positionSource) == UnitAdapter.ITEM_TYPE_EDITABLE
-                            && adapterTarget.getItemViewType(positionTarget) == UnitAdapter.ITEM_TYPE_EDITABLE)){
+                            if( (adapterSource.getItemViewType(positionSource) == UnitAdapter.ITEM_TYPE_QUANTIFIABLE)
+                                    && (adapterTarget.getItemViewType(positionTarget) == UnitAdapter.ITEM_TYPE_QUANTIFIABLE)  ) {
+                                Log.d("raaa", "Source : Quantifiable target : Quantifiable");
+                                Pair<Unit, Integer> pair = adapterSource.getPairs().get(positionSource);
+                                adapterSource.remove(positionSource);
+                                if (positionTarget >= 0) {
+                                    Log.d("raaa", "Adding pair at : "+positionTarget);
+                                    adapterTarget.add(positionTarget, pair);
+                                } else {
+                                    Log.d("raaa", "Adding pair at the end");
+                                    adapterTarget.add(pair);
+
+                                }
+
+                                adapterTarget.notifyDataSetChanged();
+
+                                // FROm the list of All units to the UnitList
+                            } else if(adapterSource.getItemViewType(positionSource) == adapterTarget.getItemViewType(positionTarget)){
+                                Log.d("raaa", "is equal : Source : "+adapterSource.getItemViewType(positionSource)+" target : "+adapterTarget.getItemViewType(positionTarget));
                                 adapterSource.remove(positionSource);
                                 adapterSource.notifyDataSetChanged();
-                            }
-
-                            // If a view comes from the RV containing the Unit List and goes to the RV containing the list of units
-                            // We do not add it to the RV containing the list of units
-
-                            Log.d("raaa", "Source : "+adapterSource.getItemViewType(positionSource)+" target : "+adapterTarget.getItemViewType(positionTarget));
-                            if( (adapterSource.getItemViewType(positionSource) == UnitAdapter.ITEM_TYPE_QUANTIFIABLE)
-                                && (adapterTarget.getItemViewType(positionTarget) == UnitAdapter.ITEM_TYPE_EDITABLE) ){
-                               // DO NOTHING
-                                Log.d("raaa", "Not add");
-                            } else {
                                 if (positionTarget >= 0) {
+                                    Log.d("raaa", "Adding at : "+positionTarget);
                                     adapterTarget.add(positionTarget, unit);
                                 } else {
+                                    Log.d("raaa", "Adding at the end");
+                                    adapterTarget.add(unit);
+                                }
+                            // From A UnitList to not a unit list, we remove it from the list
+                            }
+                            if( (adapterSource.getItemViewType(positionSource) == UnitAdapter.ITEM_TYPE_QUANTIFIABLE)
+                                    && (adapterTarget.getItemViewType(positionTarget) != UnitAdapter.ITEM_TYPE_QUANTIFIABLE)  ) {
+                                Log.d("raaa", "Source : Quantifiable target : Not Quantifiable");
+                                adapterSource.remove(positionSource);
+                                adapterSource.notifyDataSetChanged();
+                             // FROm the list of All units to the UnitList
+                            }
+
+                            if ( (adapterSource.getItemViewType(positionSource)== UnitAdapter.ITEM_TYPE_EDITABLE)
+                                    && (adapterTarget.getItemViewType(positionTarget) == UnitAdapter.ITEM_TYPE_QUANTIFIABLE)){
+                                Log.d("raaa", "Source : Editable target : Quantifiable");
+                                if (positionTarget >= 0) {
+                                    Log.d("raaa", "Adding at : "+positionTarget);
+                                    adapterTarget.add(positionTarget, unit);
+                                } else {
+                                    Log.d("raaa", "Adding at the end");
                                     adapterTarget.add(unit);
                                 }
                             }
+
                             adapterTarget.notifyDataSetChanged();
                         }
                         break;
+
                 }
                 break;
         }

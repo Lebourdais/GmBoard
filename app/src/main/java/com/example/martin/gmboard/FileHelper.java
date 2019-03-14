@@ -8,8 +8,6 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -31,6 +29,8 @@ class FileHelper {
     private final static String UNIT = "unitstorage.json";
     private final static String PC = "playerstorage.json";
     private final static String MAP = "mapstorage.json";
+    private final static String BOT_PLAYLIST = "botstorage.json";
+    private final static String TOP_PLAYLIST = "topstorage.json";
 
     // Prevents from instantiating the class
     private FileHelper(){}
@@ -258,11 +258,13 @@ class FileHelper {
         // Removing unit from old file
         String fileName;
         if(oldUnitList.isPC())
-            fileName = PC;
+            fileName = PC_LIST;
         else
-            fileName = UNIT;
+            fileName = LIST;
         String response = readJsonFile(context, fileName);
 
+        Log.d("halp", "oldname "+oldUnitList.getName());
+        Log.d("halp", "new name "+newUnitList.getName());
 
         Gson gson = new Gson();
         Type listType = new TypeToken<List<UnitList>>(){}.getType();
@@ -275,13 +277,14 @@ class FileHelper {
             }
         }
         unitLists.remove(toRemove);
+
         String json = gson.toJson(unitLists, listType);
         writeJsonFile(context, fileName, json);
 
         if(newUnitList.isPC())
-            fileName = PC;
+            fileName = PC_LIST;
         else
-            fileName = UNIT;
+            fileName = LIST;
 
 
         response = readJsonFile(context, fileName);
@@ -296,7 +299,7 @@ class FileHelper {
     }
 
     private static void addUnitToPCList(Context context, Unit unit) throws IOException {
-        String response = readJsonFile(context, LIST);
+        String response = readJsonFile(context, PC_LIST);
         Gson gson = new Gson();
         Type listType = new TypeToken<List<UnitList>>(){}.getType();
         ArrayList<UnitList> unitLists = gson.fromJson(response, listType);
@@ -310,10 +313,30 @@ class FileHelper {
         toAddTo.addUnit(unit);
 
         String json = gson.toJson(unitLists, listType);
-        writeJsonFile(context, LIST, json);
+        writeJsonFile(context, PC_LIST, json);
 
     }
-    public static List<Map> getAllMaps(Context context){
+
+    private static void removeUnitFromPCList(Context context, Unit unit) throws IOException {
+        String response = readJsonFile(context, PC_LIST);
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<UnitList>>(){}.getType();
+        ArrayList<UnitList> unitLists = gson.fromJson(response, listType);
+
+        UnitList toAddTo = new UnitList(true);
+        for(UnitList u : unitLists){
+            if(u.isPC()){
+                toAddTo = u;
+            }
+        }
+        toAddTo.addUnit(unit);
+
+        String json = gson.toJson(unitLists, listType);
+        writeJsonFile(context, PC_LIST, json);
+
+    }
+
+    static List<Map> getAllMaps(Context context){
         String fileName = MAP;
 
         String response = null;
@@ -325,11 +348,12 @@ class FileHelper {
 
         Gson gson = new Gson();
         Type listType = new TypeToken<List<Map>>(){}.getType();
-        Log.d("resp",response);
+
         ArrayList<Map> mapLists = gson.fromJson(response, listType);
 
         return mapLists;
     }
+
     static void saveMap(@NonNull Context context, Map map) throws IOException {
         String response = readJsonFile(context, MAP);
 
@@ -337,11 +361,9 @@ class FileHelper {
         Type listType = new TypeToken<List<Map>>(){}.getType();
         ArrayList<Map> maps = gson.fromJson(response, listType);
 
-
         maps.add(map);
 
         String json = gson.toJson(maps, listType);
-        Log.d("jsonperso",json);
         writeJsonFile(context, MAP, json);
     }
     static void updateMap(@NonNull Context context, Map map) throws IOException {
@@ -352,7 +374,7 @@ class FileHelper {
 
         Type listType = new TypeToken<List<Map>>(){}.getType();
         ArrayList<Map> maps = gson.fromJson(response, listType);
-        Log.d("jsonperso",gson.toJson(maps, listType));
+
         for(Map m : maps){
             if (m.getName().equals(map.getName())){
                 maps.remove(m);
@@ -364,6 +386,94 @@ class FileHelper {
 //        Log.d("jsonperso",json);
         writeJsonFile(context, MAP, json);
     }
+
+    /******************************************
+     *              METHODS ON SONGS          *
+     *****************************************/
+    static List<File> findSongs(File root){
+        ArrayList<File> al = new ArrayList<File>();
+        File[] files = root.listFiles();
+        for(File sf : files){
+            if(sf.isDirectory() && !sf.isHidden()){
+                al.addAll(findSongs(sf));
+            } else {
+                if(sf.getName().endsWith(".mp3")){
+                    al.add(sf);
+                }
+            }
+        }
+        return al;
+    }
+
+    static void savePlaylist(Context context, int which, SongInfo s) throws IOException {
+
+        String fileName;
+        if(which == SongAdapter.RV_TOP)
+            fileName = TOP_PLAYLIST;
+        else
+            fileName = BOT_PLAYLIST;
+
+        String response = readJsonFile(context, fileName);
+
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<SongInfo>>(){}.getType();
+        ArrayList<SongInfo> si = gson.fromJson(response, listType);
+        si.add(s);
+
+        String json = gson.toJson(si, listType);
+        writeJsonFile(context, fileName, json);
+    }
+
+    static List<SongInfo> getPlaylist(Context context, int which){
+
+        String fileName;
+        if(which == SongAdapter.RV_TOP)
+            fileName = TOP_PLAYLIST;
+        else
+            fileName = BOT_PLAYLIST;
+
+
+        String response = null;
+        try {
+            response = readJsonFile(context, fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<SongInfo>>(){}.getType();
+        ArrayList<SongInfo> si = gson.fromJson(response, listType);
+
+        return si;
+    }
+    static void removeSong (Context context, int which, SongInfo song) throws IOException {
+        String fileName;
+        if(which == SongAdapter.RV_TOP)
+            fileName = TOP_PLAYLIST;
+        else
+            fileName = BOT_PLAYLIST;
+
+        String response = readJsonFile(context, fileName);
+
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<SongInfo>>(){}.getType();
+        ArrayList<SongInfo> si = gson.fromJson(response, listType);
+
+        SongInfo toRemove = null;
+        for(SongInfo s : si){
+            if(s.equals(song)){
+                toRemove = s;
+            }
+        }
+
+        si.remove(toRemove);
+
+        String json = gson.toJson(si, listType);
+        writeJsonFile(context, fileName, json);
+    }
+
+
+
 
 
     /******************************************
@@ -422,6 +532,20 @@ class FileHelper {
         BufferedWriter bw = new BufferedWriter(fileWriter);
         bw.write(json);
         bw.close();
+    }
+
+    static void wipeJsonFile(@NonNull Context context) throws IOException {
+        File file = new File(context.getFilesDir(), LIST);
+
+        FileWriter fileWriter;
+        BufferedWriter bufferedWriter;
+
+                file.createNewFile();
+                fileWriter = new FileWriter(file.getAbsoluteFile());
+                bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.write("[]");
+                bufferedWriter.close();
+
     }
 
     // Sorts the List of Units by name

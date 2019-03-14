@@ -91,5 +91,14 @@ public class Unit {
         return false;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Unit)) return false;
+        Unit u = (Unit) o;
+        // Name is unique for each unit
+        return name.equals(u.getName());
+
+    }
+
 
 }

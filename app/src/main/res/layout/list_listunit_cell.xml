@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,25 +15,36 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="15dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        tools:text="UnitList" />
+        tools:text="UnitList"
+        android:textSize="32sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:layout_margin="15dp">
 
-        <Button
+        <ImageButton
             android:id="@+id/ButtonEdit"
+            android:background="@null"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ButtonEdit" />
+            android:layout_gravity="end"
+            app:srcCompat="@drawable/edit_button"
+            android:layout_marginRight="15dp"
 
-        <Button
+            />
+
+        <ImageButton
             android:id="@+id/ButtonDelete"
+            android:background="@null"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ButtonDelete" />
+            android:layout_gravity="end"
+            app:srcCompat="@drawable/crossed_swords"
+            android:layout_marginLeft="15dp"
+             />
     </LinearLayout>
 
 

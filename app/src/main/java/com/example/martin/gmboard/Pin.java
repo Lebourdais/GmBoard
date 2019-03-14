@@ -1,10 +1,7 @@
 package com.example.martin.gmboard;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v7.widget.AppCompatImageButton;
 import android.util.AttributeSet;
-import android.widget.ImageButton;
 
 public class Pin {
 

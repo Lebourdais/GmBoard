@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background_creation_list"
+    android:id="@+id/unitListCreationLayout">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/UnitRecyclerView"
@@ -14,7 +16,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/layout_border"
+        android:background="#eaeaea"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/UnitListRecyclerView"
@@ -29,7 +31,7 @@
         android:layout_marginEnd="50dp"
         android:layout_marginRight="50dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/layout_border"
+        android:background="#eaeaea"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/UnitRecyclerView"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +45,10 @@
         app:layout_constraintBottom_toTopOf="@+id/UnitRecyclerView"
         app:layout_constraintEnd_toEndOf="@+id/UnitRecyclerView"
         app:layout_constraintStart_toStartOf="@+id/UnitRecyclerView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/parchemin"
+        android:textStyle="bold"
+        android:textColor="#4d2206"/>
 
     <Button
         android:id="@+id/ButtonNewList"
@@ -53,7 +58,10 @@
         app:layout_constraintBottom_toTopOf="@+id/UnitListRecyclerView"
         app:layout_constraintEnd_toEndOf="@+id/UnitListRecyclerView"
         app:layout_constraintStart_toStartOf="@+id/UnitListRecyclerView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/parchemin"
+        android:textStyle="bold"
+        android:textColor="#4d2206"/>
 
     <Button
         android:id="@+id/ButtonCreate"
@@ -61,10 +69,12 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="Button"
+        android:text="@string/ButtonCreate"
         app:layout_constraintBottom_toTopOf="@+id/UnitListRecyclerView"
         app:layout_constraintEnd_toEndOf="@+id/UnitListRecyclerView"
         app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#4d2206"
+        android:textStyle="bold"
         />
 
 
@@ -80,6 +90,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/UnitListRecyclerView"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/parchemin"
         >
 
         <android.support.design.widget.TextInputEditText
@@ -95,5 +106,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.design.widget.TextInputLayout>
+
+    <ImageButton
+        android:id="@+id/swapUnits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="181dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="147dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/UnitRecyclerView"
+        app:layout_constraintStart_toEndOf="@+id/UnitListRecyclerView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/turn_big"
+        android:background="@null"/>
 
 </android.support.constraint.ConstraintLayout>

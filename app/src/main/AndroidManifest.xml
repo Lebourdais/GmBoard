@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.martin.gmboard">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.martin.gmboard"
 
+    >
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/app_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
         <activity
+
             android:name=".MainScreen"
             android:label="@string/app_name"
             android:screenOrientation="landscape"
@@ -21,15 +26,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SoundBoard"
-            android:label="@string/title_activity_sound_board"
-            android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
             android:name=".UnitCreationUi"
             android:label="@string/title_activity_unit_creation"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".MapUI"
             android:label="MapUI"
@@ -38,8 +39,22 @@
             android:name=".JeuUI"
             android:label="JeuUI"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
         <activity android:name=".UnitListCreationUi"
             android:label="UnitListUi"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".CombatUi"
+            android:label="Combat"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="landscape"></activity>
+        <activity android:name=".SoundboardCreationUi"
+            android:label="MP"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="landscape"></activity>
+        <activity android:name=".SoundboardPlayUi"
+            android:label="MP"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="landscape"></activity>
     </application>

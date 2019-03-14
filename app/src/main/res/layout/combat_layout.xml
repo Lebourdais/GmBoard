@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_margin="15dp"
     android:weightSum="2"
-    android:gravity="center">
+    android:gravity="center"
+    android:id="@+id/combatLayout"
+    android:background="@drawable/combat_background"
+    >
 
 
     <android.support.v7.widget.RecyclerView
@@ -14,5 +17,5 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/layout_border"/>
+        android:background="@drawable/drop_shadow_background"/>
 </LinearLayout>
