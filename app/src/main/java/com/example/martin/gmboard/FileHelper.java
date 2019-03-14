@@ -1,6 +1,7 @@
 package com.example.martin.gmboard;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -26,8 +27,10 @@ import java.util.List;
 class FileHelper {
 
     private final static String LIST = "liststorage.json";
+    private final static String PC_LIST = "pcliststorage.json";
     private final static String UNIT = "unitstorage.json";
     private final static String PC = "playerstorage.json";
+    private final static String MAP = "mapstorage.json";
 
     // Prevents from instantiating the class
     private FileHelper(){}
@@ -310,8 +313,8 @@ class FileHelper {
         writeJsonFile(context, LIST, json);
 
     }
-    public static List<Map> getAllMap(Context context){
-        String fileName = "mapstorage.json";
+    public static List<Map> getAllMaps(Context context){
+        String fileName = MAP;
 
         String response = null;
         try {
@@ -322,30 +325,46 @@ class FileHelper {
 
         Gson gson = new Gson();
         Type listType = new TypeToken<List<Map>>(){}.getType();
+        Log.d("resp",response);
         ArrayList<Map> mapLists = gson.fromJson(response, listType);
 
         return mapLists;
     }
-    public static void saveMap(@NonNull Context context, Map map) throws IOException, JSONException {
+    static void saveMap(@NonNull Context context, Map map) throws IOException {
+        String response = readJsonFile(context, MAP);
+
         Gson gson = new Gson();
-        String fileName = "mapstorage.json";
         Type listType = new TypeToken<List<Map>>(){}.getType();
+        ArrayList<Map> maps = gson.fromJson(response, listType);
 
 
-        File file = new File(context.getFilesDir(), fileName);
-        FileWriter fileWriter = null;
+        maps.add(map);
 
-        String response = readJsonFile(context, fileName);
-
-        ArrayList<Map> mapLists = gson.fromJson(response, listType);
-
-        mapLists.add(map);
-        String json = gson.toJson(mapLists, listType);
-        fileWriter = new FileWriter(file.getAbsoluteFile());
-        BufferedWriter bw = new BufferedWriter(fileWriter);
-        bw.write(json);
-        bw.close();
+        String json = gson.toJson(maps, listType);
+        Log.d("jsonperso",json);
+        writeJsonFile(context, MAP, json);
     }
+    static void updateMap(@NonNull Context context, Map map) throws IOException {
+        Log.d("passage","Enter Update Map");
+        String response = readJsonFile(context, MAP);
+
+        Gson gson = new Gson();
+
+        Type listType = new TypeToken<List<Map>>(){}.getType();
+        ArrayList<Map> maps = gson.fromJson(response, listType);
+        Log.d("jsonperso",gson.toJson(maps, listType));
+        for(Map m : maps){
+            if (m.getName().equals(map.getName())){
+                maps.remove(m);
+            }
+        }
+        maps.add(map);
+
+        String json = gson.toJson(maps, listType);
+//        Log.d("jsonperso",json);
+        writeJsonFile(context, MAP, json);
+    }
+
 
     /******************************************
      *              PRIVATE METHODS           *
@@ -433,5 +452,41 @@ class FileHelper {
         });
 
         return unitLists;
+    }
+    private static void writeMapJson(@NonNull Context context,ArrayList<Map> maps) throws IOException {
+        String json = "[";
+        for(Map map : maps) {
+            json += "{'dX':" + map.dX + ",'dY':" + map.dY + ",'pinType':" + map.pinType + ",'xmap':" + map.xmap + ",'ymap':" + map.ymap + ",'wmap':" + map.wmap + ",'hmap':" + map.hmap + ",'note':'" + map.note + "','name':'" + map.name + "','image':" + map.image + ",";
+
+
+            map.pointJson = "'circlePoints':[";
+            for (Point p : map.circlePoints) {
+                map.pointJson += ("{'x':" + String.valueOf(p.x) + ",'y':" + String.valueOf(p.y) + "},");
+            }
+            map.pointJson = map.pointJson.substring(0, map.pointJson.length() - 1);
+            map.pointJson += "],";
+
+            map.pinJson = "'listPins':[";
+            for (Pin p : map.listPins) {
+                map.pinJson += ("{'start':" + String.valueOf(p.start) + ",'xCurr':" + String.valueOf(p.xCurr) + ",'yCurr':" + String.valueOf(p.yCurr) + ",'type':" + String.valueOf(p.type) + ",'name':'" + String.valueOf(p.name) + "'},");
+            }
+            map.pinJson = map.pinJson.substring(0, map.pinJson.length() - 1);
+            map.pinJson += "],";
+            String typejson = "'listType':[";
+            for (int p : map.listType) {
+                map.pinJson += (String.valueOf(p) + ',');
+            }
+            typejson = typejson.substring(0, typejson.length() - 1);
+            json += (map.pointJson + map.pinJson + typejson + "]},");
+        }
+        json = json.substring(0, json.length() - 1);
+        json +="]";
+        Log.d("json",json);
+        File file = new File(context.getFilesDir(), "mapstorage.json");
+        FileWriter fileWriter;
+        fileWriter = new FileWriter(file.getAbsoluteFile());
+        BufferedWriter bw = new BufferedWriter(fileWriter);
+        bw.write(json);
+        bw.close();
     }
 }

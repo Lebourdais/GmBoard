@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:id="@+id/mapui"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="6"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:weightSum = "4">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/container"
+            android:layout_height="wrap_content"
+            android:weightSum="4"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/buttonReturn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40sp"
+                android:layout_marginBottom="40sp"
+                android:text="Return"
+                />
+            <com.example.martin.gmboard.PinView
+                android:id="@+id/imageMapJ"
+                android:gravity="center"
+
+                android:layout_width="700dip"
+                android:layout_height="500dip"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/MapNamejeu"
+            android:layout_width="wrap_content"
+            android:layout_height="200dip"
+            android:layout_weight="1"
+            android:text="DefaultName" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="5"
+        >
+
+        <TextView
+            android:id="@+id/Notemap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+</LinearLayout>

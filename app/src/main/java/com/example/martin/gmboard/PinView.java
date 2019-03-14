@@ -85,9 +85,14 @@ public class PinView extends SubsamplingScaleImageView {
         this.typePoints = typePoints;
     }
 
+
     public void refresh(){
-            invalidate();
+
+        // indicate view should be redrawn
+        invalidate();
+
     }
+
     public boolean touch(MotionEvent event, int type) {
             float touchX = event.getX();
             float touchY = event.getY();

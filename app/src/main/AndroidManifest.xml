@@ -34,6 +34,10 @@
             android:name=".MapUI"
             android:label="MapUI"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".JeuUI"
+            android:label="JeuUI"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".UnitListCreationUi"
             android:label="UnitListUi"
             android:theme="@style/AppTheme.NoActionBar"

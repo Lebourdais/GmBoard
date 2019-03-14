@@ -6,36 +6,30 @@ import android.support.v7.widget.AppCompatImageButton;
 import android.util.AttributeSet;
 import android.widget.ImageButton;
 
-public class Pin extends android.support.v7.widget.AppCompatImageButton {
+public class Pin {
 
     boolean start;
     float xCurr;
     float yCurr;
     int type;
     String name;
-    int idElem;
+
     public Pin(Context context,float x,float y,boolean start) {
-        super(context);
+
         this.xCurr=x;
         this.yCurr=y;
         this.start=start;
 
     }
 
-    public void setIdElem(int idElem) {
-        this.idElem = idElem;
-    }
 
-    public int getIdElem() {return idElem;}
 
     public Pin(Context context){
-        super(context);
+
     }
     public Pin(Context context, AttributeSet attributeSet){
-        super(context,attributeSet);
+
     }
-    public void setposX(float x){this.xCurr=x;}
-    public void setposY(float y){this.yCurr=y;}
     public void setType(int x){this.type=x;};
     public int getType(){return this.type;}
     public void setStart(boolean start){this.start=start;}

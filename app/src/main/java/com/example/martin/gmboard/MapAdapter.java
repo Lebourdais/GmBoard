@@ -19,7 +19,7 @@ public class MapAdapter extends RecyclerView.Adapter<MapAdapter.MapViewHolder>{
     Context context;
     MapUI ui;
     public MapAdapter(Context context,MapUI m){
-        listMap = FileHelper.getAllMap(context);
+        listMap = FileHelper.getAllMaps(context);
         ui=m;
         this.context=context;
     }

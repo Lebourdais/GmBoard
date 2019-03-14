@@ -30,10 +30,10 @@ public class MainScreen extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        Button btnplay = (Button)findViewById(R.id.buttonCreate);
+        Button btncreate = (Button)findViewById(R.id.buttonCreate);
 
 
-        btnplay.setOnClickListener(new View.OnClickListener() {
+        btncreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainScreen.this, MapUI.class));
@@ -55,7 +55,13 @@ public class MainScreen extends AppCompatActivity {
                 startActivity(new Intent(MainScreen.this, UnitListCreationUi.class));
             }
         });
-
+        Button btnplay = (Button)findViewById(R.id.buttonPlay);
+        btnplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainScreen.this, JeuUI.class));
+            }
+        });
     }
 
     @Override
