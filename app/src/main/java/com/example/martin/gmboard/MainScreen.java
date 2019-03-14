@@ -36,7 +36,7 @@ public class MainScreen extends AppCompatActivity {
         btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this, MapUI.class));
+                startActivity(new Intent(MainScreen.this, CombatUi.class));
             }
         });
 
@@ -45,7 +45,7 @@ public class MainScreen extends AppCompatActivity {
         btnUnitTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this, CombatUi.class));
+                startActivity(new Intent(MainScreen.this, SoundboardCreationUi.class));
             }
         });
         Button btnUnitTest2 = (Button)findViewById(R.id.unittest2);

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="15dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#eaeaea"
+    android:weightSum="15"
+    android:id="@+id/popupLayout">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/soundChoiceRV"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="12">
+    </android.support.v7.widget.RecyclerView>
+
+
+
+        <ImageButton
+            android:id="@+id/cancelChoice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cancel_button"
+            android:background="@null"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"/>
+
+
+
+
+
+</LinearLayout>

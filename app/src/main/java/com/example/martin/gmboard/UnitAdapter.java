@@ -32,11 +32,25 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private List<Pair<Unit, Integer>> unitsInList;
     private int itemViewType;
     private UnitListCreationListener listener;
-    private LinearLayout.LayoutParams params;
 
     static final int ITEM_TYPE_EDITABLE = 0;
     static final int ITEM_TYPE_QUANTIFIABLE = 1;
     static final int ITEM_TYPE_COMBAT = 2;
+
+    UnitAdapter(Context pContext, int pItemViewType, List<Unit> pUnits){
+        context = pContext;
+        this.listener = null;
+        itemViewType = pItemViewType;
+        units = pUnits;
+        unitsInList = new ArrayList<>();
+
+        for(Unit unit : units){
+            int quantity = Collections.frequency(units, unit);
+            Pair<Unit, Integer> p = new Pair<>(unit, quantity);
+            if(!unitsInList.contains(p))
+                unitsInList.add(p);
+        }
+    }
 
     UnitAdapter(Context pContext, int pItemViewType, UnitList pUnits){
         context = pContext;
@@ -51,8 +65,6 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             if(!unitsInList.contains(p))
                 unitsInList.add(p);
         }
-        params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(15,15,15,15);
         loadDataSet();
     }
 
@@ -60,8 +72,6 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         context = pContext;
         this.listener = listener;
         itemViewType = pItemViewType;
-        params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(15,15,15,15);
         loadDataSet();
     }
 
@@ -70,8 +80,6 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         context = pContext;
         itemViewType = pItemViewType;
         unitsInList = new ArrayList<>();
-        params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(15,15,15,15);
         if (pUnits != null)
             units = FileHelper.getUnitsFromList(context, pUnits);
         else
@@ -168,6 +176,9 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
+    // Will remove a single unit from the list
+    // if the itemViewType is QUANTIFIABLE, will remove all occurrences
+    // Use remove(Pair) to remove a single unit from the list
     private void remove(Unit unit){
         units.remove(unit);
         if(itemViewType == ITEM_TYPE_QUANTIFIABLE) {
@@ -179,6 +190,20 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 }
             }
             while (units.remove(toRemove)) ;
+        }
+    }
+
+    private void remove(Pair<Unit, Integer> p){
+        units.remove(p.getLeft());
+        Pair<Unit, Integer> toDecrement = null;
+        for(Pair<Unit, Integer> pp : unitsInList){
+            if(pp.getLeft().getName().equals(p.getLeft().getName())){
+                toDecrement = pp;
+            }
+        }
+        if(toDecrement != null) {
+            unitsInList.remove(toDecrement);
+            toDecrement.setRight(toDecrement.getRight() - 1);
         }
     }
 
@@ -246,18 +271,6 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         }
 
-    }
-
-    void removeAll(int position){
-//        Unit unitToRemove = units.get(position);
-//        while (units.remove(unitToRemove));
-        if(itemViewType == ITEM_TYPE_QUANTIFIABLE){
-            Unit toRemove = unitsInList.get(position).getLeft();
-            while (units.remove(toRemove));
-            unitsInList.remove(position);
-        } else {
-            units.remove(position);
-        }
     }
 
     DragToListListener getDragInstance() {
@@ -432,8 +445,8 @@ public class UnitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 @Override
                 public void onClick(View view){
                     int value = Integer.parseInt(number.getText().toString());
-                    if(value > 0){
-                        UnitAdapter.this.remove(currentUnit);
+                    if(value > 1){
+                        UnitAdapter.this.remove(currentPair);
                         value -= 1;
                     }
                     if(value < 0)

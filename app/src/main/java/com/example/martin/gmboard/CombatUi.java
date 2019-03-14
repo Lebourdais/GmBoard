@@ -17,8 +17,6 @@ public class CombatUi extends AppCompatActivity {
     public RecyclerView units;
     private Context context;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +25,31 @@ public class CombatUi extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         context = getApplicationContext();
+
+        View view = findViewById(R.id.combatLayout);
+
+        view.setOnTouchListener(new OnSwipeTouchListener(CombatUi.this) {
+            public void onSwipeTop() {
+                // DO NOTHING
+            }
+
+            public void onSwipeRight() {
+                // DO NOTHING
+            }
+
+            public void onSwipeLeft() {
+                // DO NOTHING
+            }
+
+            public void onSwipeBottom() {
+                // MAP activity should never be finished
+                finish();
+            }
+        });
+
+
+
+
 
         units = findViewById(R.id.combatRV);
 

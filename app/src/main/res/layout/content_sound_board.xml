@@ -1,286 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/soundLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_sound_board">
+    tools:showIn="@layout/activity_sound_board"
+    android:orientation="vertical"
+    android:background="@drawable/background_musique"
+    android:weightSum="3">
+
+
 
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center|fill"
+        android:layout_height="0dp"
+        android:layout_gravity="top"
         android:orientation="vertical"
-        android:visibility="visible"
-        android:weightSum="100">
+        android:layout_weight="2">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/topSoundRV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_tamise"
+            >
 
-        <!--<HorizontalScrollView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="50">-->
 
-            <TableLayout
-                android:id="@+id/tableLayout1"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:stretchColumns="*"
-                android:layout_weight="1"
-                android:visibility="visible">
+        </android.support.v7.widget.RecyclerView>
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="50sp">
-
-                    <Button
-                        android:id="@+id/Button"
-                        android:text="@string/LevelUp"
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_weight="1"
-                         />
-
-                    <Button
-                        android:id="@+id/Button2"
-                        android:text="@string/Coin"
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_weight="1"
-                         />
-
-                    <Button
-                        android:id="@+id/Button3"
-                        android:text="@string/chat"
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_weight="1"
-                         />
-
-                    <Button
-                        android:id="@+id/Button4"
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_weight="1"
-                         />
-
-                    <Button
-                        android:id="@+id/Button5"
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_weight="1"
-                         />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="50sp">
-
-                    <Button
-                        android:id="@+id/Button6"
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-
-                        android:layout_weight="1"
-                        android:layout_marginStart="@dimen/fab_margin"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                         />
-
-                    <Button
-                        android:id="@+id/Button7"
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/fab_margin"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_weight="1"
-                         />
-
-                    <Button
-                        android:id="@+id/Button8"
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/fab_margin"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_weight="1"
-                         />
-
-                    <Button
-                        android:id="@+id/Button9"
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/fab_margin"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_weight="1"
-                         />
-
-                    <Button
-                        android:id="@+id/Button10"
-                        android:layout_width="200dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/fab_margin"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_weight="1"
-                         />
-                </TableRow>
-            </TableLayout>
-        <!--</HorizontalScrollView>-->
-
-        <!--<HorizontalScrollView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="50">-->
-
-            <TableLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:stretchColumns="*"
-                android:layout_weight="1"
-                android:visibility="visible">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="50sp">
-
-                    <Button
-                        android:id="@+id/Button11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/fab_margin"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_weight="1"
-                         />
-
-                    <Button
-                        android:id="@+id/Button12"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/fab_margin"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_weight="1"
-                         />
-
-                    <Button
-                        android:id="@+id/Button13"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/fab_margin"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_weight="1"
-                         />
-
-                    <Button
-                        android:id="@+id/Button14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/fab_margin"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_weight="1"
-                         />
-
-                    <Button
-                        android:id="@+id/Button15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/fab_margin"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_weight="1"
-                         />
-                    <Button
-                        android:id="@+id/Button16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/fab_margin"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_weight="1"
-                         />
-                    <Button
-                        android:id="@+id/Button17"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/fab_margin"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_weight="1"
-                         />
-                    <Button
-                        android:id="@+id/Button18"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/fab_margin"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_weight="1"
-                         />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="50sp">
-
-                    <Switch
-                        android:id="@+id/switch1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/Sound1"
-                        android:layout_weight="1"/>
-
-                    <Switch
-                        android:id="@+id/switch2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/Sound2"
-                        android:layout_weight="1"/>
-
-                    <Switch
-                        android:id="@+id/switch3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="@string/Sound3" />
-
-                    <Switch
-                        android:id="@+id/switch4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="@string/Sound4" />
-
-                    <Switch
-                        android:id="@+id/switch5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="@string/Sound5" />
-                    <Switch
-                        android:id="@+id/switch6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="@string/Sound5" />
-                    <Switch
-                        android:id="@+id/switch7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="@string/Sound5" />
-                    <Switch
-                        android:id="@+id/switch8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="@string/Sound5" />
-                </TableRow>
-
-            </TableLayout>
-        <!--</HorizontalScrollView>-->
+        <ImageButton
+            android:id="@+id/addTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/plus_button_big"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_gravity="bottom"
+        android:orientation="vertical">
+
+    <android.support.v4.widget.Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageButton
+        android:id="@+id/addBot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:src="@drawable/plus_button_big"
+        android:layout_gravity="center"/>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/botSoundRV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:background="@drawable/bg_tamise"
+        >
+    </android.support.v7.widget.RecyclerView>
+
+
+    </LinearLayout>
+
+
+
+ 
+
+</LinearLayout>

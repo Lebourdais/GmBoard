@@ -6,5 +6,9 @@ public interface UnitListCreationListener {
 
     void enableEdition();
 
+    boolean getEdit();
+
     void setOldUnitList(UnitList u);
+
+
 }

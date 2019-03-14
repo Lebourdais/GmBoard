@@ -50,4 +50,8 @@
     <string name="No">Non</string>
     <string name="screenTooSmall">Cette app ne fonctionne pas sur des appareils aussi petits. L\'app va mainteannt quitter.</string>
     <string name="quit">Quitter</string>
+    <string name="shortSound">Sons courts</string>
+    <string name="sound">Mussique d\'ambiance</string>
+    <string name="label">Nom</string>
+    <string name="noTitle">Pas de titre</string>
 </resources>

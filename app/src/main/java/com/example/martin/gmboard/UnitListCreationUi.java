@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ import java.io.IOException;
 public class UnitListCreationUi extends AppCompatActivity implements UnitListCreationListener {
 
     private Context context;
+    RecyclerView unitRecyclerView;
     private RecyclerView unitListRecyclerView;
     private RecyclerView.Adapter unitListAdapter;
     private RecyclerView.Adapter unitAdapter;
@@ -31,6 +33,7 @@ public class UnitListCreationUi extends AppCompatActivity implements UnitListCre
     private Button createButton;
     private Button newListButton;
     private boolean edit;
+    private boolean flag;
     private UnitList oldUnitList;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,36 @@ public class UnitListCreationUi extends AppCompatActivity implements UnitListCre
         setSupportActionBar(toolbar);
 
         context = getApplicationContext();
+
+        View view = findViewById(R.id.unitListCreationLayout);
+
+        view.setOnTouchListener(new OnSwipeTouchListener(UnitListCreationUi.this) {
+            public void onSwipeTop() {
+                // DO NOTHING
+            }
+
+            public void onSwipeRight() {
+                // DO NOTHING
+            }
+
+            public void onSwipeLeft() {
+                // DO NOTHING
+            }
+
+            public void onSwipeBottom() {
+                // MAP activity should never be finished
+                finish();
+            }
+
+
+        });
+
+
+
+
+
         edit = false;
+        flag = true;
         final UnitListCreationListener activity = this;
         populateUnitRecyclerView(activity);
         populateUnitListRecyclerView(activity);
@@ -50,7 +82,7 @@ public class UnitListCreationUi extends AppCompatActivity implements UnitListCre
         createButton = findViewById(R.id.ButtonCreate);
         listName = findViewById(R.id.TILName);
         newListButton = findViewById(R.id.ButtonNewList);
-
+        final ImageButton su = findViewById(R.id.swapUnits);
         createButton.setVisibility(View.GONE);
         listName.setVisibility(View.GONE);
         unitInListAdapter = new UnitAdapter(context, UnitAdapter.ITEM_TYPE_QUANTIFIABLE, null, activity) ;
@@ -69,28 +101,52 @@ public class UnitListCreationUi extends AppCompatActivity implements UnitListCre
             public void onClick(View view) {
                 edit = false;
                 unitListRecyclerView.setAdapter(unitInListAdapter);
+                su.setVisibility(View.GONE);
                 swapButtons(true);
+
 
             }
         });
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("halp", "save method right here");
+
+                su.setVisibility(View.VISIBLE);
                 if(!edit) {
                     if (createUnitList()) {
-                        Log.d("halp", "save method done");
+
                         unitListRecyclerView.setAdapter(unitListAdapter);
                         ((UnitListAdapter) unitListAdapter).loadDataSet();
                         swapButtons(false);
                     }
                 } else {
                     if ( editUnitList()) {
-                        Log.d("halp", "edit method done");
+
                         unitListRecyclerView.setAdapter(unitListAdapter);
                         ((UnitListAdapter) unitListAdapter).loadDataSet();
                         swapButtons(false);
                     }
+                }
+            }
+        });
+
+
+
+        su.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(flag) {
+                    newListButton.setVisibility(View.INVISIBLE);
+                    unitRecyclerView.setAdapter(new UnitAdapter(context, UnitAdapter.ITEM_TYPE_EDITABLE, FileHelper.getAllUnits(context, true)));
+                    unitRecyclerView.getAdapter().notifyDataSetChanged();
+                    unitListRecyclerView.setAdapter(null);
+                    flag = false;
+                } else {
+                    newListButton.setVisibility(View.VISIBLE);
+                    unitRecyclerView.setAdapter(new UnitAdapter(context, UnitAdapter.ITEM_TYPE_EDITABLE, activity));
+                    unitRecyclerView.getAdapter().notifyDataSetChanged();
+                    unitListRecyclerView.setAdapter(new UnitListAdapter(context, UnitListAdapter.ITEM_TYPE_EDITABLE,activity));
+                    flag = true;
                 }
             }
         });
@@ -116,10 +172,11 @@ public class UnitListCreationUi extends AppCompatActivity implements UnitListCre
         edit = true;
     }
 
+    public boolean getEdit(){ return edit; }
+
     @Override
     public void setOldUnitList(UnitList u) {
         oldUnitList = u;
-        Log.d("Edit bug", " create with name "+oldUnitList.getName());
     }
 
     @Override
@@ -131,7 +188,7 @@ public class UnitListCreationUi extends AppCompatActivity implements UnitListCre
 
     public void populateUnitRecyclerView(UnitListCreationListener activity){
         unitAdapter = new UnitAdapter(context, UnitAdapter.ITEM_TYPE_EDITABLE, activity);
-        RecyclerView unitRecyclerView = findViewById(R.id.UnitRecyclerView);
+        unitRecyclerView = findViewById(R.id.UnitRecyclerView);
         DividerItemDecoration itemDecorator = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
         itemDecorator.setDrawable(ContextCompat.getDrawable(context, R.drawable.layout_border));
         unitRecyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
@@ -153,7 +210,7 @@ public class UnitListCreationUi extends AppCompatActivity implements UnitListCre
     }
 
     public boolean createUnitList(){
-        Log.d("halp", " in create list ");
+        Log.d("raaa", " in create list ");
         if (UnitList.exists(context, ((EditText) findViewById(R.id.listName)).getText().toString())) {
             Toast.makeText(context, getString(R.string.creationError3), Toast.LENGTH_LONG).show();
             return false;
@@ -175,11 +232,7 @@ public class UnitListCreationUi extends AppCompatActivity implements UnitListCre
     }
 
     public boolean editUnitList(){
-        Log.d("halp", " in new list "+oldUnitList.getName());
-        if (UnitList.exists(context, ((EditText) findViewById(R.id.listName)).getText().toString())) {
-            Toast.makeText(context, getString(R.string.creationError3), Toast.LENGTH_LONG).show();
-            return false;        }
-
+        Log.d("raaa", " in edit list "+oldUnitList.getName());
         if (TextUtils.isEmpty(((EditText) findViewById(R.id.listName)).getText().toString().trim())){
             Toast.makeText(context, getString(R.string.creationError4), Toast.LENGTH_LONG).show();
             return false;

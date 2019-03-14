@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,6 +124,7 @@ public class UnitListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     UnitListCreationListener listener = UnitListAdapter.this.getListener();
                     RecyclerView rv = UnitListAdapter.this.getRecyclerView();
                     listener.enableEdition();
+                    Log.d("raaa", " enable : edit is "+String.valueOf(listener.getEdit()));
                     listener.setOldUnitList(currentUnitList);
                     listener.swapButtons(true);
                     UnitAdapter ua = new UnitAdapter(context, UnitAdapter.ITEM_TYPE_QUANTIFIABLE, currentUnitList, UnitListAdapter.this.getListener());
@@ -189,6 +191,10 @@ public class UnitListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 public void onClick(View v) {
                     RecyclerView rv = UnitListAdapter.this.getRecyclerView();
                     UnitAdapter ua = new UnitAdapter(context, UnitAdapter.ITEM_TYPE_COMBAT, currentUnitList);
+                    List<Unit> units = FileHelper.getAllUnits(context, true);
+                    for(Unit u : units){
+                        ua.add(u);
+                    }
                     rv.setAdapter(ua);
                     rv.setOnDragListener(ua.getDragInstance());
                 }

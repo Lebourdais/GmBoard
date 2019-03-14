@@ -1,28 +1,22 @@
 package com.example.martin.gmboard;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -159,7 +153,7 @@ public class MapUI extends AppCompatActivity implements RadioGroup.OnCheckedChan
 
     }
     public boolean existMap(Context context,String name){
-        List<Map> listMap  = FileHelper.getAllMap(context);
+        List<Map> listMap  = FileHelper.getAllMaps(context);
         for(Map m : listMap){
             Log.d("name","name = "+m.getName()+" wanted = "+name+" check = "+m.getName().equals(name));
             if (m.getName().equals(name)){
@@ -169,7 +163,7 @@ public class MapUI extends AppCompatActivity implements RadioGroup.OnCheckedChan
         return false;
     }
     public void loadMap(Context context,String name){
-        List<Map> listMap  = FileHelper.getAllMap(context);
+        List<Map> listMap  = FileHelper.getAllMaps(context);
         Log.d("list",String.valueOf(listMap));
 
         Map newmap = null;
