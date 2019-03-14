@@ -92,6 +92,29 @@ public class SoundboardCreationUi extends AppCompatActivity implements Soundboar
                 }
             });
 
+            View view = findViewById(R.id.soundLayout);
+
+            view.setOnTouchListener(new OnSwipeTouchListener(SoundboardCreationUi.this) {
+                public void onSwipeTop() {
+                    // MAP activity should never be finished
+                    finish();
+                }
+
+                public void onSwipeRight() {
+                    // DO NOTHING
+                }
+
+                public void onSwipeLeft() {
+                    // DO NOTHING
+                }
+
+                public void onSwipeBottom() {
+                    // DO NOTHING
+                }
+
+
+            });
+
         }
     }
 

@@ -14,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import java.io.File;
@@ -44,6 +46,29 @@ public class SoundboardPlayUi extends AppCompatActivity implements SoundboardLis
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             }
         } else {
+            View view = findViewById(R.id.soundboardPlay);
+
+            view.setOnTouchListener(new OnSwipeTouchListener(SoundboardPlayUi.this) {
+                public void onSwipeTop() {
+                    // MAP activity should never be finished
+                    finish();
+                }
+
+                public void onSwipeRight() {
+                    // DO NOTHING
+                }
+
+                public void onSwipeLeft() {
+                    // DO NOTHING
+                }
+
+                public void onSwipeBottom() {
+                    // DO NOTHING
+                }
+
+
+            });
+
             context = getApplicationContext();
 
             DividerItemDecoration itemDecorator = new DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL);

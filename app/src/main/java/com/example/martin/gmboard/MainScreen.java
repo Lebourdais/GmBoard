@@ -26,7 +26,7 @@ public class MainScreen extends AppCompatActivity {
         TextView tv = findViewById(R.id.titleView);
         tv.setTypeface(typeface);
         Button btncreate = (Button)findViewById(R.id.buttonCreate);
-
+        Button btnplay = findViewById(R.id.buttonPlay);
 
 
         btncreate.setOnClickListener(new View.OnClickListener() {
@@ -35,6 +35,15 @@ public class MainScreen extends AppCompatActivity {
                 startActivity(new Intent(MainScreen.this, MapUI.class));
             }
         });
+
+        btnplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainScreen.this, JeuUI.class));
+            }
+        });
+
+
 
 
 
@@ -65,21 +74,6 @@ public class MainScreen extends AppCompatActivity {
 
 
 
-
-        Button btnUnitTest2 = (Button)findViewById(R.id.unittest2);
-        btnUnitTest2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this, UnitListCreationUi.class));
-            }
-        });
-        Button btnplay = (Button)findViewById(R.id.buttonPlay);
-        btnplay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this, JeuUI.class));
-            }
-        });
     }
 
     @Override

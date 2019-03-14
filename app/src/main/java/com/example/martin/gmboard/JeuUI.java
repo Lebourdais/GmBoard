@@ -117,6 +117,29 @@ public class JeuUI extends AppCompatActivity  {
             }
         });
         loadMap(c,"main");
+
+        View view = findViewById(R.id.jeui);
+
+        view.setOnTouchListener(new OnSwipeTouchListener(JeuUI.this) {
+            public void onSwipeTop() {
+                // MAP activity should never be finished
+                startActivity(new Intent(JeuUI.this, CombatUi.class));
+            }
+
+            public void onSwipeRight() {
+                // DO NOTHING
+            }
+
+            public void onSwipeLeft() {
+                // DO NOTHING
+            }
+
+            public void onSwipeBottom() {
+                startActivity(new Intent(JeuUI.this, SoundboardPlayUi.class));
+            }
+
+
+        });
     }
 
     public void savePOI() {

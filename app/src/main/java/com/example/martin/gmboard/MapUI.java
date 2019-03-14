@@ -1,6 +1,7 @@
 package com.example.martin.gmboard;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +48,10 @@ public class MapUI extends AppCompatActivity implements RadioGroup.OnCheckedChan
         this.first = true;
         map = new Map();
         c = getApplicationContext();
+
+
+
+
 
         map.pinType = 2;
         map.image = R.drawable.swordcoastmaplowres;
@@ -153,7 +158,29 @@ public class MapUI extends AppCompatActivity implements RadioGroup.OnCheckedChan
 
         ((Button) findViewById(R.id.submit)).setOnClickListener(validateInput);
 
+        View view = findViewById(R.id.mapui);
 
+        view.setOnTouchListener(new OnSwipeTouchListener(MapUI.this) {
+            public void onSwipeTop() {
+                // MAP activity should never be finished
+                startActivity(new Intent(MapUI.this, UnitListCreationUi.class));
+            }
+
+            public void onSwipeRight() {
+                // DO NOTHING
+            }
+
+            public void onSwipeLeft() {
+                // DO NOTHING
+            }
+
+            public void onSwipeBottom() {
+                // MAP activity should never be finished
+                startActivity(new Intent(MapUI.this, SoundboardCreationUi.class));
+            }
+
+
+        });
     }
 
     @Override
